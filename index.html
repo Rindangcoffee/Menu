@@ -1,112 +1,113 @@
 <!doctype html>
 <html lang="id">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Rindang Coffee — Self Order (Full Menu)</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Rindang Coffee — Menu Lengkap</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
   <style>
     :root{
-      --accent:#6b3f2f;
-      --accent-2:#8b5e4f;
-      --bg:#fbf8f6;
-      --card:#ffffff;
-      --muted:#6b6b6b;
-      --shadow:0 8px 30px rgba(15,15,15,0.06);
-      --radius:12px;
+      --accent:#6b3f2f; --accent-2:#8b5e4f; --bg:#fbf8f6; --card:#fff;
+      --muted:#6b6b6b; --shadow:0 10px 30px rgba(15,15,15,0.06); --radius:12px;
+      --maxw:1200px;
     }
     *{box-sizing:border-box}
-    body{font-family:Inter,system-ui,-apple-system,'Segoe UI',Roboto,Arial;margin:0;background:var(--bg);color:#222}
-    header{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:white;padding:18px;text-align:center}
-    .container{max-width:1100px;margin:18px auto;padding:0 18px}
-    .top-row{display:flex;gap:18px;flex-wrap:wrap}
-    .cover{flex:1 1 520px;background:var(--card);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}
-    .cover img{width:100%;height:320px;object-fit:cover;display:block}
-    .panel{flex:0 0 320px;background:var(--card);border-radius:var(--radius);padding:14px;box-shadow:var(--shadow);height:320px;display:flex;flex-direction:column;justify-content:space-between}
-    .btn{display:inline-block;background:var(--accent);color:white;padding:10px 14px;border-radius:12px;text-decoration:none;font-weight:700}
-    .menu-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:18px}
-    .menu-card{background:var(--card);border-radius:12px;padding:12px;box-shadow:var(--shadow);display:flex;gap:12px;align-items:flex-start}
-    .menu-card img{width:110px;height:80px;object-fit:cover;border-radius:8px;flex-shrink:0}
-    .menu-info{flex:1}
-    .menu-info .name{font-weight:700;font-size:16px}
-    .menu-info .cat{font-size:13px;color:var(--muted);margin-top:6px}
-    .price{color:var(--accent);font-weight:700;margin-top:8px}
-    .muted{color:var(--muted);font-size:13px}
-    /* Cart */
-    .cart{position:fixed;right:18px;bottom:18px;width:360px;max-height:76vh;overflow:auto;z-index:60}
-    .cart .card{background:var(--card);padding:14px;border-radius:12px;box-shadow:var(--shadow)}
+    body{font-family:Inter,system-ui,Arial;margin:0;background:var(--bg);color:#222}
+    header{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#fff;padding:18px}
+    .wrap{max-width:var(--maxw);margin:18px auto;padding:0 16px}
+    h1{margin:0;font-size:22px}
+    .subtitle{opacity:.95;margin-top:6px;color:#f3eadf}
+    main{margin-top:18px}
+    .section{margin-top:28px}
+    .section h2{margin:0;font-size:18px;display:flex;align-items:center;gap:10px}
+    .section p.desc{margin:6px 0;color:var(--muted);font-size:13px}
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:12px}
+    .card{background:var(--card);border-radius:12px;padding:12px;box-shadow:var(--shadow);display:flex;flex-direction:column;height:100%}
+    .thumb{width:100%;height:120px;object-fit:cover;border-radius:8px;background:#eee}
+    .name{font-weight:700;margin-top:10px}
+    .desc-item{color:var(--muted);font-size:13px;margin-top:8px;flex:1}
+    .price{color:var(--accent);font-weight:800;margin-top:8px}
+    .controls{display:flex;justify-content:flex-end;margin-top:8px}
+    .btn{background:var(--accent);color:#fff;border:0;padding:8px 12px;border-radius:10px;cursor:pointer}
+    .ghost{background:transparent;border:1px solid #eee;padding:6px 8px;border-radius:8px;cursor:pointer;color:var(--accent)}
+    .cart{position:fixed;right:18px;bottom:18px;width:360px;max-height:78vh;overflow:auto;z-index:80}
+    .cart .panel{background:var(--card);padding:14px;border-radius:12px;box-shadow:var(--shadow)}
     .cart h3{margin:0 0 8px 0}
     .cart-item{display:flex;justify-content:space-between;gap:8px;padding:8px 0;border-bottom:1px dashed #eee}
     .cart-footer{display:flex;justify-content:space-between;align-items:center;margin-top:10px}
-    .small{font-size:13px;color:#555}
     label{display:block;margin-top:8px}
-    input,select,textarea{width:100%;padding:8px;margin-top:6px;border-radius:8px;border:1px solid #e6e6e6;box-sizing:border-box}
-    .ghost{background:transparent;color:var(--accent);border:1px solid #e6e6e6;padding:8px;border-radius:8px;cursor:pointer}
-    .qr-wrap{display:flex;gap:8px;align-items:center;margin-top:12px}
-    .explain{margin-top:8px;color:#444;font-size:14px}
-    @media (max-width:1000px){.menu-grid{grid-template-columns:repeat(1,1fr)}.panel{flex-basis:100%}.cover{flex-basis:100%}}
-    @media (max-width:620px){.menu-grid{grid-template-columns:1fr}.top-row{flex-direction:column}.panel{height:auto}.cart{position:static;width:auto;margin-top:12px}}
-    footer{max-width:1100px;margin:28px auto;padding:18px;text-align:center;color:var(--muted);font-size:14px}
+    input,select,textarea{width:100%;padding:8px;margin-top:6px;border-radius:8px;border:1px solid #e6e6e6}
+    .muted{color:var(--muted)}
+    @media (max-width:1000px){.grid{grid-template-columns:repeat(2,1fr)}}
+    @media (max-width:640px){.grid{grid-template-columns:1fr}.cart{position:static;width:auto;margin-top:12px}}
+    footer{margin:28px 0;text-align:center;color:var(--muted)}
   </style>
 </head>
 <body>
   <header>
-    <div style="max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:12px;justify-content:center">
+    <div class="wrap" style="display:flex;align-items:center;justify-content:space-between">
       <div>
-        <h1 style="margin:0;font-size:22px">Rindang Coffee — Self Order (Full Menu)</h1>
-        <div style="opacity:0.95">Versi lengkap menu — deskripsi detail untuk tiap item.</div>
+        <h1>Rindang Coffee — Menu Lengkap</h1>
+        <div class="subtitle">Scan QR di meja / buka link ini untuk pesan langsung — tanpa WA/GForm</div>
       </div>
+      <div style="color:#fff;font-weight:600">Open 10:00 - 22:00</div>
     </div>
   </header>
 
-  <main class="container">
-    <section class="top-row">
-      <div class="cover">
-        <img src="images/photo1.jpg" alt="cover" onerror="this.style.display='none'"/>
-      </div>
-
-      <aside class="panel">
-        <div>
-          <div style="display:flex;justify-content:space-between;align-items:center">
-            <div>
-              <div class="muted">Buka setiap hari</div>
-              <div style="font-size:18px;font-weight:800">10:00 - 22:00</div>
-            </div>
-            <div style="background:#f3e9df;color:var(--accent);padding:6px 10px;border-radius:999px;font-weight:700">Gratis Wi-Fi</div>
-          </div>
-
-          <div class="explain">Pilih menu, sesuaikan jumlah, lalu checkout. Kami menyimpan pesanan ke Google Sheets—siapkan Apps Script untuk menerima notifikasi.</div>
-
-          <div class="qr-wrap">
-            <div style="flex:1">
-              <div class="small">Link pemesanan:</div>
-              <div id="pageLink" class="muted" style="word-break:break-all">(memuat...)</div>
-            </div>
-            <div style="text-align:center">
-              <img id="qrImg" alt="QR" style="width:96px;height:96px;border-radius:10px;background:#fff;border:1px solid #eee" />
-              <div style="margin-top:8px">
-                <button id="copyBtn" class="ghost">Salin Link</button>
-              </div>
-            </div>
-          </div>
-
-        </div>
-
-        <div style="font-size:13px;color:var(--muted)">Contact: <a href="tel:+62812XXXXXXX">+62 812-XXXX-XXXX</a> • IG: <a href="https://instagram.com/yourhandle" target="_blank">@yourhandle</a></div>
-      </aside>
+  <main class="wrap">
+    <!-- Sections will render here -->
+    <section class="section" id="sec-food">
+      <h2>🍽️ FOOD — Main Course</h2>
+      <p class="desc">Pilihan nasi goreng & hidangan utama — lengkap dengan acar, sambal, dan telur sesuai menu.</p>
+      <div class="grid" id="grid-main-course"></div>
     </section>
 
-    <section id="menu" style="margin-top:20px">
-      <div class="menu-grid" id="menuGrid">
-      </div>
+    <section class="section" id="sec-grill">
+      <h2>Grill / Steak</h2>
+      <p class="desc">Pilihan steak & grill — disajikan dengan saus blackpepper, sayuran, dan kentang goreng.</p>
+      <div class="grid" id="grid-grill"></div>
+    </section>
+
+    <section class="section" id="sec-rawsea">
+      <h2>Rawon & Seafood</h2>
+      <p class="desc">Rawon, kerang, udang, cumi, dan mix seafood — disajikan bersama nasi.</p>
+      <div class="grid" id="grid-rawsea"></div>
+    </section>
+
+    <section class="section" id="sec-pasta">
+      <h2>Pasta</h2>
+      <p class="desc">Spaghetti & Fettuccine — saus bolognese atau creamy blackpepper.</p>
+      <div class="grid" id="grid-pasta"></div>
+    </section>
+
+    <section class="section" id="sec-sandwich">
+      <h2>Sandwiches</h2>
+      <p class="desc">Pilihan sandwich praktis untuk cepat santap.</p>
+      <div class="grid" id="grid-sandwich"></div>
+    </section>
+
+    <section class="section" id="sec-additional">
+      <h2>Additional & Snack</h2>
+      <p class="desc">Tambahan seperti mantau, nasi, telur, dan camilan.</p>
+      <div class="grid" id="grid-additional"></div>
+    </section>
+
+    <section class="section" id="sec-drinks">
+      <h2>☕ BEVERAGE — Coffee Based & Single Origin</h2>
+      <p class="desc">Kopi-based, single origin, dan tea-based — lengkap dengan signature & milk-based.</p>
+      <div class="grid" id="grid-drinks"></div>
+    </section>
+
+    <section class="section" id="sec-signature">
+      <h2>Signature & Milk Based</h2>
+      <p class="desc">Pilihan signature house dan variasi milk-based (choco, matcha, avocado, dll.).</p>
+      <div class="grid" id="grid-signature"></div>
     </section>
   </main>
 
   <!-- Cart -->
   <aside class="cart" id="cartCard" aria-live="polite">
-    <div class="card">
+    <div class="panel">
       <h3>Keranjang</h3>
       <div id="cartList"><div class="muted">Belum ada item.</div></div>
 
@@ -122,10 +123,10 @@
 
       <div style="margin-top:12px">
         <label>Nama
-          <input id="customerName" placeholder="Nama pemesan" required />
+          <input id="customerName" placeholder="Nama pemesan" />
         </label>
         <label>Meja / Ambil di
-          <input id="pickupLoc" placeholder="Contoh: Bar / Dapur / Takeaway / No. 5" required />
+          <input id="pickupLoc" placeholder="Contoh: Bar / Dapur / Takeaway / No. 5" />
         </label>
         <label>Catatan (opsional)
           <textarea id="note" rows="2" placeholder="contoh: kurang pedas"></textarea>
@@ -134,214 +135,246 @@
           <select id="paymentMethod">
             <option value="cod">Bayar di tempat (COD)</option>
             <option value="bank">Transfer / Manual</option>
-            <option value="stripe">Stripe Payment Link (jika sudah disetup)</option>
+            <option value="stripe">Stripe Payment Link (jika disetup)</option>
           </select>
         </label>
       </div>
 
       <div style="margin-top:12px;color:#7a580f;background:#fff8e0;padding:8px;border-radius:8px;font-size:13px">
-        Saat checkout, data akan disimpan di Google Sheets dan admin akan menerima email notifikasi.
+        Pesanan akan tersimpan ke Google Sheets jika Apps Script diatur. Ganti CONFIG di bagian bawah.
       </div>
     </div>
   </aside>
 
   <footer>
-    <div>© Rindang Coffee</div>
+    © Rindang Coffee
   </footer>
 
-<script>
-const scriptUrl = "REPLACE_WITH_YOUR_APPS_SCRIPT_EXEC_URL";
-const SECRET_TOKEN = "REPLACE_WITH_SECRET_TOKEN";
-const ADMIN_EMAIL = "youremail@example.com";
+  <script>
+    // CONFIG — ganti sebelum deploy
+    const scriptUrl = 'REPLACE_WITH_YOUR_APPS_SCRIPT_EXEC_URL';
+    const SECRET_TOKEN = 'REPLACE_WITH_SECRET_TOKEN';
+    const ADMIN_EMAIL = 'youremail@example.com';
 
-/* FULL MENU with detailed explanations */
-const MENU = [
-  { id:'m01', name:'Nasi Goreng Asian Style', price:18000,
-    desc:'Nasi goreng dengan bumbu citarasa Asia: bawang putih, kecap manis, saus tiram ringan, disajikan dengan acar, sambal, dan telur. Porsi sedang, cocok untuk makan siang.' ,
-    image:'images/nasi_goreng_asian.jpg' },
+    // MENU DATA (sesuai teks yang kamu kirim). 
+    // Gambar: simpan di folder images/ dengan filename sesuai id + .jpg (mis. m01.jpg)
+    const MENU = {
+      "mainCourse": [
+        {id:'m01', name:'Nasi Goreng Asian Style', price:18000, desc:'Nasi goreng dengan bumbu citarasa Asia disajikan dengan acar, sambal, dan telur.', image:'images/m01.jpg'},
+        {id:'m02', name:'Nasi Goreng Seafood', price:28000, desc:'Nasi goreng dengan bumbu citarasa Asia disajikan dengan udang laut, acar, dan sambal.', image:'images/m02.jpg'},
+        {id:'m03', name:'Nasi Goreng Spicy Chicken', price:28000, desc:'Nasi goreng dengan potongan daging ayam dan bumbu khas Chinese, disajikan dengan acar, sambal, dan telur.', image:'images/m03.jpg'},
+        {id:'m04', name:'Nasi Goreng Ayam Jamur', price:28000, desc:'Nasi goreng dengan potongan daging ayam dan irisan jamur berbumbu spesial, disajikan dengan acar, sambal, dan telur.', image:'images/m04.jpg'},
+        {id:'m05', name:'Nasi Ayam Lalapan', price:32000, desc:'Ayam goreng disajikan dengan nasi, sambal, dan lalapan.', image:'images/m05.jpg'},
+        {id:'m06', name:'Nasi Bebek Lalapan', price:40000, desc:'Bebek goreng disajikan dengan nasi, sambal, dan lalapan.', image:'images/m06.jpg'},
+        {id:'m07', name:'Nasi Sop Daging Sapi', price:35000, desc:'Sop daging sapi dengan potongan kentang, wortel, dan tomat. Disajikan dengan nasi, sambal, dan potongan jeruk nipis.', image:'images/m07.jpg'},
+        {id:'m08', name:'Sop Iga Sapi', price:50000, desc:'Sop iga sapi dengan potongan sayuran, kentang, wortel, dan tomat. Disajikan dengan nasi, sambal, dan potongan jeruk nipis.', image:'images/m08.jpg'},
+        {id:'m09', name:'Tongseng Daging Sapi', price:45000, desc:'Daging sapi dimasak dengan kuah berbumbu, ditambahkan sayuran kol dan tomat, disajikan dengan nasi. Bisa pedas/tidak pedas.', image:'images/m09.jpg'}
+        {id:'r01', name:'Rawon Daging Sapi', price:40000, desc:'Sop daging sapi dengan bumbu rawon dan potongan kol serta tauge. Disajikan dengan nasi, sambal, dan jeruk nipis.', image:'images/r01.jpg'},
+        {id:'r02', name:'Kerang Hijau Saos', price:35000, desc:'Kerang hijau dengan saus khas Rindang, disajikan dengan nasi.', image:'images/r02.jpg'},
+        {id:'r03', name:'Udang Saos', price:40000, desc:'Udang laut dengan saus khas Rindang, disajikan dengan nasi.', image:'images/r03.jpg'},
+        {id:'r04', name:'Cumi-cumi Saos', price:45000, desc:'Cumi-cumi kupas dimasak dengan saus khas Rindang, disajikan dengan nasi.', image:'images/r04.jpg'},
+        {id:'r05', name:'Mix Seafood', price:40000, desc:'Udang laut, kerang hijau, dan kerang tahu dimasak dengan saus khas Rindang disajikan dengan nasi.', image:'images/r05.jpg'}
+      ],
+      "grill": [
+        {id:'g01', name:'Beef Tenderloin Steak', price:60000, desc:'Daging sapi khas dalam panggang disajikan dengan saus blackpepper, sayuran, dan kentang goreng.', image:'images/g01.jpg'},
+        {id:'g02', name:'Beef Striploin Steak', price:65000, desc:'Daging sapi khas luar panggang disajikan dengan saus blackpepper, sayuran, dan kentang goreng.', image:'images/g02.jpg'},
+        {id:'g03', name:'Chicken Steak', price:52000, desc:'Daging ayam panggang disajikan dengan saus blackpepper, sayuran, dan kentang goreng.', image:'images/g03.jpg'}
+      ],
+      "pasta": [
+        {id:'p01', name:'Spaghetti Bolognese', price:30000, desc:'Spaghetti dengan potongan daging sapi cincang dan saus bolognese.', image:'images/p01.jpg'},
+        {id:'p02', name:'Fettuccine Chicken', price:30000, desc:'Fettuccine dengan irisan daging ayam dan saus creamy blackpepper.', image:'images/p02.jpg'},
+        {id:'p03', name:'Fettuccine Beef', price:35000, desc:'Fettuccine dengan irisan daging sapi dan saus creamy blackpepper.', image:'images/p03.jpg'}
+      ],
+      "sandwich": [
+        {id:'s01', name:'Club Sandwich', price:28000, desc:'3 potong roti panggang dengan olesan saus, smoked beef, telur panggang, keju, tomat, dan selada.', image:'images/s01.jpg'},
+        {id:'s02', name:'Smoked Beef Sandwich', price:25000, desc:'3 potong roti panggang dengan saus sandwich, smoked beef, selada, dan tomat.', image:'images/s02.jpg'},
+        {id:'s03', name:'Chicken Steak Sandwich', price:30000, desc:'Roti panggang dengan saus sandwich, daging ayam panggang, selada, dan tomat.', image:'images/s03.jpg'},
+        {id:'s04', name:'Beef Steak Sandwich', price:35000, desc:'Roti panggang dengan saus sandwich, daging sapi panggang, selada, dan tomat.', image:'images/s04.jpg'}
+      ],
+      "additional": [
+        {id:'a01', name:'Mantau', price:18000, desc:'Roti kukus lembut, cocok untuk cocol saus.', image:'images/a01.jpg'},
+        {id:'a02', name:'Nasi', price:6000, desc:'Nasi putih hangat (per porsi).', image:'images/a02.jpg'},
+        {id:'a03', name:'Telur', price:5000, desc:'Telur ayam (rebus/ceplok sesuai request).', image:'images/a03.jpg'},
+        {id:'sn01', name:'French Fries', price:14000, desc:'Kentang goreng renyah.', image:'images/sn01.jpg'},
+        {id:'sn02', name:'Spicy Chicken Wings', price:25000, desc:'Sayap ayam pedas renyah.', image:'images/sn02.jpg'}
+      ],
+      "drinks": [
+        {id:'d01', name:'Tubruk', price:10000, desc:'Kopi hitam paling jujur. Rasakan kenikmatan murni dari biji kopi pilihan Anda.', image:'images/d01.jpg'},
+        {id:'d02', name:'Espresso', price:15000, desc:'Ekstraksi singkat dengan rasa intens, tegas dan berani.', image:'images/d02.jpg'},
+        {id:'d03', name:'Black Coffee', price:15000, desc:'Espresso murni dengan tambahan air, rasa jernih pahit-manis alami.', image:'images/d03.jpg'},
+        {id:'d04', name:'Cappuccino', price:20000, desc:'Espresso lembut berpadu susu steamed dan foam lembut.', image:'images/d04.jpg'},
+        {id:'d05', name:'Latte', price:25000, desc:'Espresso berpadu susu creamy dan microfoam tipis.', image:'images/d05.jpg'},
+        {id:'d06', name:'Vanilla Latte', price:25000, desc:'Espresso, susu, dan sirup vanilla harum.', image:'images/d06.jpg'},
+        {id:'d07', name:'Caramel Latte', price:25000, desc:'Espresso dengan susu lembut dan sirup caramel.', image:'images/d07.jpg'},
+        {id:'d08', name:'Mocha Latte', price:25000, desc:'Espresso, cokelat premium, dan susu creamy.', image:'images/d08.jpg'},
+        {id:'d09', name:'Avocado Coffee', price:25000, desc:'Espresso dipadukan avocado premium.', image:'images/d09.jpg'}
+      ],
+      "singleOrigin": [
+        {id:'so01', name:'V60', price:25000, desc:'Seduhan manual pour-over menonjolkan rasa kopi murni.', image:'images/so01.jpg'},
+        {id:'so02', name:'Japanese', price:25000, desc:'Pour-over langsung ke es, rasa cerah dan manis segar.', image:'images/so02.jpg'}
+      ],
+      "tea": [
+        {id:'t01', name:'Black Tea', price:10000, desc:'Teh hitam klasik.', image:'images/t01.jpg'},
+        {id:'t02', name:'Peach Tea', price:10000, desc:'Teh rasa peach segar.', image:'images/t02.jpg'},
+        {id:'t03', name:'Lemon Tea', price:10000, desc:'Teh lemon segar.', image:'images/t03.jpg'}
+      ],
+      "addOn": [
+        {id:'ad01', name:'Cheese Cream', price:5000, desc:'Topping cream keju.', image:'images/ad01.jpg'},
+        {id:'ad02', name:'Extra Espresso', price:5000, desc:'Shot ekstra espresso.', image:'images/ad02.jpg'}
+      ],
+      "signature": [
+        {id:'sg01', name:'Rindang Coffee', price:25000, desc:'Espresso pekat berpadu susu creamy dan gula aren.', image:'images/sg01.jpg'},
+        {id:'sg02', name:'Klepon', price:25000, desc:'Perpaduan santan, pandan, gula merah, dan susu creamy.', image:'images/sg02.jpg'},
+        {id:'sg03', name:'Blue Island', price:20000, desc:'Sirup citrus, soda, dan es — menyegarkan.', image:'images/sg03.jpg'},
+        {id:'sg04', name:'Pinky', price:20000, desc:'Susu fermentasi + sirup strawberry.', image:'images/sg04.jpg'}
+      ],
+      "milkBased": [
+        {id:'mkt01', name:'Chocolate', price:23000, desc:'Chocolate powder premium dan susu lembut.', image:'images/mkt01.jpg'},
+        {id:'mkt02', name:'Choco Vanilla', price:23000, desc:'Cokelat premium + vanilla.', image:'images/mkt02.jpg'},
+        {id:'mkt03', name:'Choco Caramel', price:23000, desc:'Cokelat pekat + caramel.', image:'images/mkt03.jpg'},
+        {id:'mkt04', name:'Choco Hazelnut', price:23000, desc:'Cokelat + hazelnut.', image:'images/mkt04.jpg'},
+        {id:'mkt05', name:'Red Velvet', price:23000, desc:'Rasa red velvet + susu creamy.', image:'images/mkt05.jpg'},
+        {id:'mkt06', name:'Matcha', price:27000, desc:'Matcha premium.', image:'images/mkt06.jpg'},
+        {id:'mkt07', name:'Avocado', price:20000, desc:'Bubuk alpukat creamy + susu.', image:'images/mkt07.jpg'},
+        {id:'mkt08', name:'Taro', price:20000, desc:'Bubuk talas ungu lembut.', image:'images/mkt08.jpg'},
+        {id:'mkt09', name:'Avocado Choco', price:25000, desc:'Alpukat + cokelat pekat.', image:'images/mkt09.jpg'},
+        {id:'mkt10', name:'Cheese Charcoal', price:23000, desc:'Susu arang + foam keju.', image:'images/mkt10.jpg'},
+        {id:'mkt11', name:'Strawberry Cake', price:23000, desc:'Susu + sirup strawberry.', image:'images/mkt11.jpg'}
+      ]
+    };
 
-  { id:'m02', name:'Nasi Goreng Seafood', price:28000,
-    desc:'Nasi goreng yang kaya rasa dengan udang laut segar, potongan cumi, dan sayuran. Dihidangkan dengan acar dan sambal khas.' ,
-    image:'images/nasi_goreng_seafood.jpg' },
-
-  { id:'m03', name:'Nasi Goreng Spicy Chicken', price:28000,
-    desc:'Nasi goreng dengan ayam bumbu pedas. Level pedas bisa disesuaikan.' ,
-    image:'images/nasi_goreng_spicy_chicken.jpg' },
-
-  { id:'m04', name:'Nasi Goreng Ayam Jamur', price:28000,
-    desc:'Perpaduan ayam suwir dan jamur tumis dengan bumbu kecap dan lada. Gurih dan lembut.' ,
-    image:'images/nasi_goreng_ayam_jamur.jpg' },
-
-  { id:'m05', name:'Nasi Ayam Lalapan', price:32000,
-    desc:'Ayam goreng renyah dengan lalapan segar dan sambal pedas.' ,
-    image:'images/nasi_ayam_lalapan.jpg' },
-
-  { id:'m06', name:'Nasi Bebek Lalapan', price:40000,
-    desc:'Bebek goreng garing, sambal pedas-manis, dan lalapan segar.' ,
-    image:'images/nasi_bebek_lalapan.jpg' },
-
-  { id:'m07', name:'Nasi Sop Daging Sapi', price:35000,
-    desc:'Sop daging bening dengan kentang, wortel, tomat, nasi, dan sambal.' ,
-    image:'images/nasi_sop_daging_sapi.jpg' },
-
-  { id:'m08', name:'Sop Iga Sapi', price:50000,
-    desc:'Sop iga dengan daging lembut dan kuah gurih. Disajikan panas.' ,
-    image:'images/sop_iga_sapi.jpg' },
-
-  { id:'m09', name:'Tongseng Daging Sapi', price:45000,
-    desc:'Tongseng sapi kuah berempah dengan kol dan tomat. Pedas opsional.' ,
-    image:'images/tongseng_daging_sapi.jpg' },
-
-  { id:'s01', name:'Beef Tenderloin Steak', price:60000,
-    desc:'Steak tenderloin dengan saus lada hitam, sayuran panggang, dan kentang.' ,
-    image:'images/beef_tenderloin.jpg' },
-
-  { id:'b01', name:'Kopi Tubruk', price:10000,
-    desc:'Kopi hitam tradisional tanpa filter dengan rasa kuat.' ,
-    image:'images/tubruk.jpg' },
-
-  { id:'b02', name:'Espresso', price:15000,
-    desc:'Espresso single shot dengan rasa intens.' ,
-    image:'images/espresso.jpg' },
-
-  { id:'d01', name:'Kopi Susu (Rindang Coffee)', price:25000,
-    desc:'Espresso + susu creamy + gula aren. Signature house.' ,
-    image:'images/rindang_coffee.jpg' },
-
-  { id:'sn01', name:'French Fries', price:14000,
-    desc:'Kentang goreng renyah, cocok untuk camilan.' ,
-    image:'images/french_fries.jpg' },
-
-  { id:'sn02', name:'Mantau', price:18000,
-    desc:'Roti kukus lembut, nikmat dicocol saus.' ,
-    image:'images/mantau.jpg' }
-];
-
-let cart = {};
-
-function formatRp(n){ return 'Rp ' + Number(n).toLocaleString('id-ID'); }
-
-const menuGrid = document.getElementById('menuGrid');
-
-function renderMenu(){
-  menuGrid.innerHTML = '';
-  MENU.forEach(item=>{
-    const el = document.createElement('div');
-    el.className = 'menu-card';
-    el.innerHTML = `
-      <img src="${item.image}" alt="${item.name}" onerror="this.style.display='none'">
-      <div class="menu-info">
+    // helper functions
+    function formatRp(n){ return 'Rp ' + Number(n).toLocaleString('id-ID'); }
+    function createCard(item){
+      const card = document.createElement('div'); card.className='card';
+      card.innerHTML = `
+        <img class="thumb" src="${item.image}" alt="${item.name}" onerror="this.style.background='#f1f1f1'">
         <div class="name">${item.name}</div>
-        <div class="cat">${item.desc}</div>
+        <div class="desc-item">${item.desc}</div>
         <div class="price">${formatRp(item.price)}</div>
-        <div style="margin-top:8px"><button data-id="${item.id}" class="btn addBtn">Tambah</button></div>
-      </div>
-    `;
-    menuGrid.appendChild(el);
-  });
-}
+        <div class="controls"><button class="btn addBtn" data-id="${item.id}" data-name="${encodeURIComponent(item.name)}" data-price="${item.price}">Tambah</button></div>
+      `;
+      return card;
+    }
 
-function addToCart(id){
-  const item = MENU.find(m=>m.id===id);
-  if(!item) return;
-  if(!cart[id]) cart[id] = {...item, qty:0};
-  cart[id].qty++;
-  renderCart();
-}
+    // render sections
+    function renderGrid(key, containerId){
+      const container = document.getElementById(containerId);
+      container.innerHTML = '';
+      const items = MENU[key] || [];
+      items.forEach(it => container.appendChild(createCard(it)));
+    }
 
-function decCart(id){
-  if(!cart[id]) return;
-  cart[id].qty--;
-  if(cart[id].qty<=0) delete cart[id];
-  renderCart();
-}
+    // initial render
+    renderGrid('mainCourse','grid-main-course');
+    renderGrid('grill','grid-grill');
+    renderGrid('rawsea','grid-rawsea');
+    renderGrid('pasta','grid-pasta');
+    renderGrid('sandwich','grid-sandwich');
+    renderGrid('additional','grid-additional');
+    // drinks & origins
+    (function(){
+      // combine drinks + singleOrigin + tea + addOn into grid-drinks and signature + milkBased into separate
+      const drinksContainer = document.getElementById('grid-drinks');
+      drinksContainer.innerHTML = '';
+      (MENU.drinks||[]).forEach(i=>drinksContainer.appendChild(createCard(i)));
+      (MENU.singleOrigin||[]).forEach(i=>drinksContainer.appendChild(createCard(i)));
+      (MENU.tea||[]).forEach(i=>drinksContainer.appendChild(createCard(i)));
+      (MENU.addOn||[]).forEach(i=>drinksContainer.appendChild(createCard(i)));
+    })();
+    renderGrid('signature','grid-signature');
+    renderGrid('milkBased','grid-signature'); // appended below signature
 
-function removeCart(id){
-  delete cart[id];
-  renderCart();
-}
+    // cart state
+    let cart = {};
+    function addToCart(id,name,price){
+      if(!cart[id]) cart[id] = { id, name: decodeURIComponent(name), price: Number(price), qty:0 };
+      cart[id].qty++;
+      renderCart();
+    }
+    function decCart(id){ if(!cart[id]) return; cart[id].qty--; if(cart[id].qty<=0) delete cart[id]; renderCart(); }
+    function removeCart(id){ delete cart[id]; renderCart(); }
 
-function renderCart(){
-  const cartList = document.getElementById('cartList');
-  cartList.innerHTML = '';
-  const keys = Object.keys(cart);
-  if(keys.length===0){
-    cartList.innerHTML = '<div class="muted">Belum ada item.</div>';
-    document.getElementById('totalPrice').textContent = formatRp(0);
-    return;
-  }
-  let total = 0;
-  keys.forEach(k=>{
-    const it = cart[k];
-    const div = document.createElement('div');
-    div.className = 'cart-item';
-    div.innerHTML = `
-      <div style="flex:1">
-        <strong>${it.name}</strong>
-        <div class="small">${formatRp(it.price)} x ${it.qty}</div>
-      </div>
-      <div style="text-align:right">
-        <div>${formatRp(it.price * it.qty)}</div>
-        <div style="margin-top:6px">
-          <button class="ghost" data-dec="${it.id}">-</button>
-          <button class="ghost" data-inc="${it.id}">+</button>
-          <button class="ghost" data-rem="${it.id}">hapus</button>
-        </div>
-      </div>
-    `;
-    cartList.appendChild(div);
-    total += it.price * it.qty;
-  });
-  document.getElementById('totalPrice').textContent = formatRp(total);
+    function renderCart(){
+      const list = document.getElementById('cartList'); list.innerHTML='';
+      const keys = Object.keys(cart);
+      if(keys.length===0){ list.innerHTML = '<div class="muted">Belum ada item.</div>'; document.getElementById('totalPrice').textContent = formatRp(0); return; }
+      let total = 0;
+      keys.forEach(k=>{
+        const it = cart[k];
+        const d = document.createElement('div'); d.className='cart-item';
+        d.innerHTML = `
+          <div style="flex:1">
+            <strong>${it.name}</strong>
+            <div class="small">${formatRp(it.price)} x ${it.qty}</div>
+          </div>
+          <div style="text-align:right">
+            <div>${formatRp(it.price * it.qty)}</div>
+            <div style="margin-top:6px">
+              <button class="ghost" data-dec="${it.id}">-</button>
+              <button class="ghost" data-inc="${it.id}">+</button>
+              <button class="ghost" data-rem="${it.id}">hapus</button>
+            </div>
+          </div>
+        `;
+        list.appendChild(d);
+        total += it.price * it.qty;
+      });
+      document.getElementById('totalPrice').textContent = formatRp(total);
 
-  cartList.querySelectorAll('[data-inc]').forEach(b=>b.onclick = ()=>addToCart(b.dataset.inc));
-  cartList.querySelectorAll('[data-dec]').forEach(b=>b.onclick = ()=>decCart(b.dataset.dec));
-  cartList.querySelectorAll('[data-rem]').forEach(b=>b.onclick = ()=>removeCart(b.dataset.rem));
-}
+      list.querySelectorAll('[data-inc]').forEach(b=>b.onclick=()=> addToCart(b.dataset.inc, encodeURIComponent(cart[b.dataset.inc].name), cart[b.dataset.inc].price));
+      list.querySelectorAll('[data-dec]').forEach(b=>b.onclick=()=> decCart(b.dataset.dec));
+      list.querySelectorAll('[data-rem]').forEach(b=>b.onclick=()=> removeCart(b.dataset.rem));
+    }
 
-document.addEventListener('click', (e)=>{
-  if(e.target.matches('.addBtn')) addToCart(e.target.dataset.id);
-});
+    // global click handlers
+    document.addEventListener('click', (e)=>{
+      if(e.target.matches('.addBtn')){
+        addToCart(e.target.dataset.id, e.target.dataset.name, e.target.dataset.price);
+      }
+    });
 
-document.getElementById('checkoutBtn').addEventListener('click', async ()=>{
-  const name = document.getElementById('customerName').value.trim();
-  const pickup = document.getElementById('pickupLoc').value.trim();
-  const note = document.getElementById('note').value.trim();
-  const payment = document.getElementById('paymentMethod').value;
-  if(!name || !pickup){ alert('Isi nama dan lokasi pengambilan'); return; }
+    // checkout
+    document.getElementById('checkoutBtn').addEventListener('click', async ()=>{
+      const name = document.getElementById('customerName').value.trim();
+      const pickup = document.getElementById('pickupLoc').value.trim();
+      const note = document.getElementById('note').value.trim();
+      const payment = document.getElementById('paymentMethod').value;
+      if(!name || !pickup){ alert('Isi nama dan lokasi pengambilan'); return; }
+      const keys = Object.keys(cart);
+      if(keys.length===0){ alert('Keranjang kosong'); return; }
+      const items = keys.map(k=>({ id: cart[k].id, name: cart[k].name, qty: cart[k].qty, price: cart[k].price }));
+      const total = items.reduce((s,i)=>s + i.qty * i.price, 0);
+      const orderId = 'ORD' + Date.now();
+      const payload = { secret: SECRET_TOKEN, orderId, name, pickup, note, payment, items, total, adminEmail: ADMIN_EMAIL };
 
-  const keys = Object.keys(cart);
-  if(keys.length===0){ alert('Keranjang kosong'); return; }
+      try{
+        if(scriptUrl && !scriptUrl.includes('REPLACE_WITH')) {
+          const r = await fetch(scriptUrl, { method:'POST', headers:{ 'Content-Type':'application/json' }, body: JSON.stringify(payload) });
+          const j = await r.json();
+          if(j.success) {
+            alert('Pesanan terkirim! Nomor pesanan: ' + orderId);
+          } else {
+            alert('Server: ' + (j.message || 'Gagal menyimpan pesanan'));
+          }
+        } else {
+          alert('Demo order: ' + orderId + '\\nTotal: ' + formatRp(total));
+        }
+        cart = {}; renderCart();
+        document.getElementById('customerName').value=''; document.getElementById('pickupLoc').value=''; document.getElementById('note').value='';
+      } catch(err){
+        alert('Error: ' + err.message);
+      }
+    });
 
-  const items = keys.map(k=>({ id: cart[k].id, name: cart[k].name, qty: cart[k].qty, price: cart[k].price }));
-  const total = items.reduce((s,i)=>s + i.qty * i.price, 0);
-  const orderId = 'ORD' + Date.now();
-
-  const payload = { secret: SECRET_TOKEN, orderId, name, pickup, note, payment, items, total, adminEmail: ADMIN_EMAIL };
-
-  try{
-    alert('Pesanan dibuat (demo): ' + orderId);
-    cart = {}; renderCart();
-    document.getElementById('customerName').value = '';
-    document.getElementById('pickupLoc').value = '';
-    document.getElementById('note').value = '';
-  } catch(err){
-    alert('Error: ' + err.message);
-  }
-});
-
-function setPageLink(){
-  const link = location.href;
-  document.getElementById('pageLink').textContent = link;
-  const qr = 'https://chart.googleapis.com/chart?cht=qr&chs=240x240&chl=' + encodeURIComponent(link);
-  document.getElementById('qrImg').src = qr;
-}
-document.getElementById('copyBtn').onclick = ()=>navigator.clipboard.writeText(location.href).then(()=>alert('Link disalin!'));
-
-renderMenu();
-renderCart();
-setPageLink();
-</script>
-
+    // page link + QR (simple)
+    function setPageLink(){
+      const link = location.href;
+      // you can show link or QR generator if needed
+    }
+    renderCart();
+    setPageLink();
+  </script>
 </body>
 </html>
+
