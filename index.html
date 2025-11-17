@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Rindang Coffee — Self Order</title>
+  <title>Rindang Coffee — Self Order (Full Menu)</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
@@ -26,12 +26,13 @@
     .cover img{width:100%;height:320px;object-fit:cover;display:block}
     .panel{flex:0 0 320px;background:var(--card);border-radius:var(--radius);padding:14px;box-shadow:var(--shadow);height:320px;display:flex;flex-direction:column;justify-content:space-between}
     .btn{display:inline-block;background:var(--accent);color:white;padding:10px 14px;border-radius:12px;text-decoration:none;font-weight:700}
-    .menu-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:18px}
-    .menu-card{background:var(--card);border-radius:12px;padding:10px;box-shadow:var(--shadow);display:flex;gap:12px;align-items:center}
-    .menu-card img{width:84px;height:64px;object-fit:cover;border-radius:8px;flex-shrink:0}
+    .menu-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:18px}
+    .menu-card{background:var(--card);border-radius:12px;padding:12px;box-shadow:var(--shadow);display:flex;gap:12px;align-items:flex-start}
+    .menu-card img{width:110px;height:80px;object-fit:cover;border-radius:8px;flex-shrink:0}
     .menu-info{flex:1}
-    .menu-info .name{font-weight:700}
-    .price{color:var(--accent);font-weight:700}
+    .menu-info .name{font-weight:700;font-size:16px}
+    .menu-info .cat{font-size:13px;color:var(--muted);margin-top:6px}
+    .price{color:var(--accent);font-weight:700;margin-top:8px}
     .muted{color:var(--muted);font-size:13px}
     /* Cart */
     .cart{position:fixed;right:18px;bottom:18px;width:360px;max-height:76vh;overflow:auto;z-index:60}
@@ -44,7 +45,8 @@
     input,select,textarea{width:100%;padding:8px;margin-top:6px;border-radius:8px;border:1px solid #e6e6e6;box-sizing:border-box}
     .ghost{background:transparent;color:var(--accent);border:1px solid #e6e6e6;padding:8px;border-radius:8px;cursor:pointer}
     .qr-wrap{display:flex;gap:8px;align-items:center;margin-top:12px}
-    @media (max-width:1000px){.menu-grid{grid-template-columns:repeat(2,1fr)}.panel{flex-basis:100%}.cover{flex-basis:100%}}
+    .explain{margin-top:8px;color:#444;font-size:14px}
+    @media (max-width:1000px){.menu-grid{grid-template-columns:repeat(1,1fr)}.panel{flex-basis:100%}.cover{flex-basis:100%}}
     @media (max-width:620px){.menu-grid{grid-template-columns:1fr}.top-row{flex-direction:column}.panel{height:auto}.cart{position:static;width:auto;margin-top:12px}}
     footer{max-width:1100px;margin:28px auto;padding:18px;text-align:center;color:var(--muted);font-size:14px}
   </style>
@@ -53,8 +55,8 @@
   <header>
     <div style="max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:12px;justify-content:center">
       <div>
-        <h1 style="margin:0;font-size:22px">Rindang Coffee — Self Order</h1>
-        <div style="opacity:0.95">Santai. Nikmati rasa. Pesan langsung dari halaman ini.</div>
+        <h1 style="margin:0;font-size:22px">Rindang Coffee — Self Order (Full Menu)</h1>
+        <div style="opacity:0.95">Versi lengkap menu — deskripsi detail untuk tiap item.</div>
       </div>
     </div>
   </header>
@@ -75,7 +77,7 @@
             <div style="background:#f3e9df;color:var(--accent);padding:6px 10px;border-radius:999px;font-weight:700">Gratis Wi-Fi</div>
           </div>
 
-          <div style="margin-top:12px;color:var(--muted);font-size:14px">Silakan pilih menu dan klik <strong>Tambah</strong>. Untuk checkout, isi nama & meja lalu klik <strong>Checkout</strong>.</div>
+          <div class="explain">Pilih menu, sesuaikan jumlah, lalu checkout. Kami menyimpan pesanan ke Google Sheets—siapkan Apps Script untuk menerima notifikasi.</div>
 
           <div class="qr-wrap">
             <div style="flex:1">
@@ -151,36 +153,86 @@
 const scriptUrl = "REPLACE_WITH_YOUR_APPS_SCRIPT_EXEC_URL";
 const SECRET_TOKEN = "REPLACE_WITH_SECRET_TOKEN";
 const ADMIN_EMAIL = "youremail@example.com";
-<div class="section-title"><h2>Main Course</h2><div class="line"></div></div>
-      <div class="menu-grid">
 
+/* FULL MENU with detailed explanations */
 const MENU = [
-  { id:'m01', name:'Nasi Goreng Asian Style', price:18000, desc:'Nasi goreng dengan bumbu Asia.', image:'images/nasi_goreng_asian.jpg' },
-  { id:'m02', name:'Nasi Goreng Seafood', price:28000, desc:'Dengan udang laut.', image:'images/nasi_goreng_seafood.jpg' },
-  { id:'m03', name:'Nasi Goreng Spicy Chicken', price:28000, desc:'Ayam pedas.', image:'images/nasi_spicy.jpg' },
-  { id:'b01', name:'Kopi Tubruk', price:10000, desc:'Kopi hitam pekat.', image:'images/tubruk.jpg' },
-  { id:'b02', name:'Espresso', price:15000, desc:'Ekstraksi singkat.', image:'images/espresso.jpg' },
-  { id:'d01', name:'Kopi Susu (Rindang)', price:25000, desc:'Espresso + susu + aren.', image:'images/rindang_coffee.jpg' }
+  { id:'m01', name:'Nasi Goreng Asian Style', price:18000,
+    desc:'Nasi goreng dengan bumbu citarasa Asia: bawang putih, kecap manis, saus tiram ringan, disajikan dengan acar, sambal, dan telur. Porsi sedang, cocok untuk makan siang.' ,
+    image:'images/nasi_goreng_asian.jpg' },
+
+  { id:'m02', name:'Nasi Goreng Seafood', price:28000,
+    desc:'Nasi goreng yang kaya rasa dengan udang laut segar, potongan cumi, dan sayuran. Dihidangkan dengan acar dan sambal khas.' ,
+    image:'images/nasi_goreng_seafood.jpg' },
+
+  { id:'m03', name:'Nasi Goreng Spicy Chicken', price:28000,
+    desc:'Nasi goreng dengan ayam bumbu pedas. Level pedas bisa disesuaikan.' ,
+    image:'images/nasi_goreng_spicy_chicken.jpg' },
+
+  { id:'m04', name:'Nasi Goreng Ayam Jamur', price:28000,
+    desc:'Perpaduan ayam suwir dan jamur tumis dengan bumbu kecap dan lada. Gurih dan lembut.' ,
+    image:'images/nasi_goreng_ayam_jamur.jpg' },
+
+  { id:'m05', name:'Nasi Ayam Lalapan', price:32000,
+    desc:'Ayam goreng renyah dengan lalapan segar dan sambal pedas.' ,
+    image:'images/nasi_ayam_lalapan.jpg' },
+
+  { id:'m06', name:'Nasi Bebek Lalapan', price:40000,
+    desc:'Bebek goreng garing, sambal pedas-manis, dan lalapan segar.' ,
+    image:'images/nasi_bebek_lalapan.jpg' },
+
+  { id:'m07', name:'Nasi Sop Daging Sapi', price:35000,
+    desc:'Sop daging bening dengan kentang, wortel, tomat, nasi, dan sambal.' ,
+    image:'images/nasi_sop_daging_sapi.jpg' },
+
+  { id:'m08', name:'Sop Iga Sapi', price:50000,
+    desc:'Sop iga dengan daging lembut dan kuah gurih. Disajikan panas.' ,
+    image:'images/sop_iga_sapi.jpg' },
+
+  { id:'m09', name:'Tongseng Daging Sapi', price:45000,
+    desc:'Tongseng sapi kuah berempah dengan kol dan tomat. Pedas opsional.' ,
+    image:'images/tongseng_daging_sapi.jpg' },
+
+  { id:'s01', name:'Beef Tenderloin Steak', price:60000,
+    desc:'Steak tenderloin dengan saus lada hitam, sayuran panggang, dan kentang.' ,
+    image:'images/beef_tenderloin.jpg' },
+
+  { id:'b01', name:'Kopi Tubruk', price:10000,
+    desc:'Kopi hitam tradisional tanpa filter dengan rasa kuat.' ,
+    image:'images/tubruk.jpg' },
+
+  { id:'b02', name:'Espresso', price:15000,
+    desc:'Espresso single shot dengan rasa intens.' ,
+    image:'images/espresso.jpg' },
+
+  { id:'d01', name:'Kopi Susu (Rindang Coffee)', price:25000,
+    desc:'Espresso + susu creamy + gula aren. Signature house.' ,
+    image:'images/rindang_coffee.jpg' },
+
+  { id:'sn01', name:'French Fries', price:14000,
+    desc:'Kentang goreng renyah, cocok untuk camilan.' ,
+    image:'images/french_fries.jpg' },
+
+  { id:'sn02', name:'Mantau', price:18000,
+    desc:'Roti kukus lembut, nikmat dicocol saus.' ,
+    image:'images/mantau.jpg' }
 ];
 
 let cart = {};
 
 function formatRp(n){ return 'Rp ' + Number(n).toLocaleString('id-ID'); }
 
-const menuGrid = document.getElementById("menuGrid");
+const menuGrid = document.getElementById('menuGrid');
 
 function renderMenu(){
-  menuGrid.innerHTML = "";
+  menuGrid.innerHTML = '';
   MENU.forEach(item=>{
-    const el = document.createElement("div");
-    el.className="menu-card";
-    el.innerHTML=`
-      <img src="${item.image}" onerror="this.style.display='none'">
+    const el = document.createElement('div');
+    el.className = 'menu-card';
+    el.innerHTML = `
+      <img src="${item.image}" alt="${item.name}" onerror="this.style.display='none'">
       <div class="menu-info">
         <div class="name">${item.name}</div>
-        <div class="muted">${item.desc}</div>
-      </div>
-      <div style="text-align:right">
+        <div class="cat">${item.desc}</div>
         <div class="price">${formatRp(item.price)}</div>
         <div style="margin-top:8px"><button data-id="${item.id}" class="btn addBtn">Tambah</button></div>
       </div>
@@ -191,12 +243,14 @@ function renderMenu(){
 
 function addToCart(id){
   const item = MENU.find(m=>m.id===id);
-  if(!cart[id]) cart[id]={...item,qty:0};
+  if(!item) return;
+  if(!cart[id]) cart[id] = {...item, qty:0};
   cart[id].qty++;
   renderCart();
 }
 
 function decCart(id){
+  if(!cart[id]) return;
   cart[id].qty--;
   if(cart[id].qty<=0) delete cart[id];
   renderCart();
@@ -208,78 +262,81 @@ function removeCart(id){
 }
 
 function renderCart(){
-  const cartList = document.getElementById("cartList");
-  cartList.innerHTML = "";
+  const cartList = document.getElementById('cartList');
+  cartList.innerHTML = '';
   const keys = Object.keys(cart);
   if(keys.length===0){
-    cartList.innerHTML="<div class='muted'>Belum ada item.</div>";
-    document.getElementById("totalPrice").textContent= formatRp(0);
+    cartList.innerHTML = '<div class="muted">Belum ada item.</div>';
+    document.getElementById('totalPrice').textContent = formatRp(0);
     return;
   }
-  let total=0;
+  let total = 0;
   keys.forEach(k=>{
     const it = cart[k];
-    const div = document.createElement("div");
-    div.className="cart-item";
-    div.innerHTML=`
-      <div style="flex:1"><strong>${it.name}</strong><div class="small">${formatRp(it.price)} x ${it.qty}</div></div>
+    const div = document.createElement('div');
+    div.className = 'cart-item';
+    div.innerHTML = `
+      <div style="flex:1">
+        <strong>${it.name}</strong>
+        <div class="small">${formatRp(it.price)} x ${it.qty}</div>
+      </div>
       <div style="text-align:right">
-        <div>${formatRp(it.price*it.qty)}</div>
+        <div>${formatRp(it.price * it.qty)}</div>
         <div style="margin-top:6px">
           <button class="ghost" data-dec="${it.id}">-</button>
           <button class="ghost" data-inc="${it.id}">+</button>
           <button class="ghost" data-rem="${it.id}">hapus</button>
         </div>
-      </div>`;
+      </div>
+    `;
     cartList.appendChild(div);
     total += it.price * it.qty;
   });
-  document.getElementById("totalPrice").textContent=formatRp(total);
+  document.getElementById('totalPrice').textContent = formatRp(total);
 
-  cartList.querySelectorAll("[data-inc]").forEach(b=>b.onclick=()=>addToCart(b.dataset.inc));
-  cartList.querySelectorAll("[data-dec]").forEach(b=>b.onclick=()=>decCart(b.dataset.dec));
-  cartList.querySelectorAll("[data-rem]").forEach(b=>b.onclick=()=>removeCart(b.dataset.rem));
+  cartList.querySelectorAll('[data-inc]').forEach(b=>b.onclick = ()=>addToCart(b.dataset.inc));
+  cartList.querySelectorAll('[data-dec]').forEach(b=>b.onclick = ()=>decCart(b.dataset.dec));
+  cartList.querySelectorAll('[data-rem]').forEach(b=>b.onclick = ()=>removeCart(b.dataset.rem));
 }
 
-document.addEventListener("click", (e)=>{
-  if(e.target.matches(".addBtn")) addToCart(e.target.dataset.id);
+document.addEventListener('click', (e)=>{
+  if(e.target.matches('.addBtn')) addToCart(e.target.dataset.id);
 });
 
-document.getElementById("checkoutBtn").addEventListener("click", async ()=>{
-  const name=document.getElementById("customerName").value.trim();
-  const pickup=document.getElementById("pickupLoc").value.trim();
-  const note=document.getElementById("note").value.trim();
-  const payment=document.getElementById("paymentMethod").value;
-  if(!name||!pickup){ alert("Isi nama & meja!"); return; }
+document.getElementById('checkoutBtn').addEventListener('click', async ()=>{
+  const name = document.getElementById('customerName').value.trim();
+  const pickup = document.getElementById('pickupLoc').value.trim();
+  const note = document.getElementById('note').value.trim();
+  const payment = document.getElementById('paymentMethod').value;
+  if(!name || !pickup){ alert('Isi nama dan lokasi pengambilan'); return; }
 
-  const keys=Object.keys(cart);
-  if(keys.length===0){ alert("Keranjang kosong"); return; }
+  const keys = Object.keys(cart);
+  if(keys.length===0){ alert('Keranjang kosong'); return; }
 
-  const items = keys.map(k=>({
-    name: cart[k].name,
-    qty: cart[k].qty,
-    price: cart[k].price
-  }));
+  const items = keys.map(k=>({ id: cart[k].id, name: cart[k].name, qty: cart[k].qty, price: cart[k].price }));
+  const total = items.reduce((s,i)=>s + i.qty * i.price, 0);
+  const orderId = 'ORD' + Date.now();
 
-  const total = items.reduce((s,i)=>s+i.qty*i.price,0);
-  const orderId = "ORD"+Date.now();
+  const payload = { secret: SECRET_TOKEN, orderId, name, pickup, note, payment, items, total, adminEmail: ADMIN_EMAIL };
 
-  const payload = {
-    secret:SECRET_TOKEN, orderId, name, pickup, note,
-    payment, items, total, adminEmail:ADMIN_EMAIL
-  };
-
-  alert("Pesanan berhasil dibuat: "+orderId);
-  cart={}; renderCart();
+  try{
+    alert('Pesanan dibuat (demo): ' + orderId);
+    cart = {}; renderCart();
+    document.getElementById('customerName').value = '';
+    document.getElementById('pickupLoc').value = '';
+    document.getElementById('note').value = '';
+  } catch(err){
+    alert('Error: ' + err.message);
+  }
 });
 
 function setPageLink(){
   const link = location.href;
-  document.getElementById("pageLink").textContent = link;
-  const qr = "https://chart.googleapis.com/chart?cht=qr&chs=200x200&chl="+encodeURIComponent(link);
-  document.getElementById("qrImg").src = qr;
+  document.getElementById('pageLink').textContent = link;
+  const qr = 'https://chart.googleapis.com/chart?cht=qr&chs=240x240&chl=' + encodeURIComponent(link);
+  document.getElementById('qrImg').src = qr;
 }
-document.getElementById("copyBtn").onclick = ()=>navigator.clipboard.writeText(location.href).then(()=>alert("Disalin!"));
+document.getElementById('copyBtn').onclick = ()=>navigator.clipboard.writeText(location.href).then(()=>alert('Link disalin!'));
 
 renderMenu();
 renderCart();
