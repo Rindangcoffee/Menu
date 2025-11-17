@@ -1,0 +1,205 @@
+<!--
+Mini Cafe Menu - Single HTML file
+Instructions:
+1. Save this file as mini-cafe-menu.html (already done).
+2. Put your images in the same folder and name them (or update paths):
+   - photo1.jpg (cover)
+   - photo2.jpg (seafood tray)
+   - photo3.jpg (nasi goreng)
+   - logo.png (optional)
+3. Replace https://docs.google.com/forms/d/11NCGQKuMVr_0n4G27N9l37iVN9iGwLZxsMundpCvxbM/edit with your Google Form URL (once the form is published).
+4. Open this file in a browser or host it on GitHub Pages / Netlify.
+-->
+
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Menu - Cafe Kamu</title>
+  <style>
+    :root{--accent:#6b3f2f;--muted:#f3e9df;--card:#fff;--bg:#f6f0ec}
+    *{box-sizing:border-box}
+    body{font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; margin:0; background:var(--bg); color:#222}
+    header{background:linear-gradient(90deg, rgba(107,63,47,0.95), rgba(90,50,40,0.95)); color:white; padding:28px 20px; text-align:center}
+    .logo{height:56px; vertical-align:middle}
+    h1{margin:0;font-size:28px;letter-spacing:0.6px}
+    .lead{opacity:0.95;margin-top:6px;font-size:14px}
+    .container{max-width:980px;margin:22px auto;padding:0 18px}
+    .hero{display:flex;gap:16px;flex-wrap:wrap}
+    .cover{flex:1 1 360px;background:var(--card);border-radius:12px;overflow:hidden;box-shadow:0 8px 22px rgba(0,0,0,0.08)}
+    .cover img{width:100%;height:100%;object-fit:cover;display:block}
+    .order-panel{flex:0 0 320px;background:var(--card);border-radius:12px;padding:18px;box-shadow:0 8px 22px rgba(0,0,0,0.06)}
+    .price{font-weight:700;color:var(--accent);font-size:20px}
+    .btn{display:inline-block;background:var(--accent);color:white;padding:10px 14px;border-radius:8px;text-decoration:none;font-weight:600}
+    .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:18px}
+    .card{background:var(--card);padding:12px;border-radius:10px;box-shadow:0 6px 16px rgba(0,0,0,0.04)}
+    .cat{font-weight:700;margin-bottom:8px}
+    .item{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px dashed #eee}
+    .item:last-child{border-bottom:0}
+    .item .name{font-weight:600}
+    .muted{color:#666;font-size:13px}
+    footer{padding:18px;text-align:center;color:#666;font-size:13px}
+    @media (max-width:720px){.grid{grid-template-columns:1fr}.order-panel{flex-basis:100%}}
+    .gallery{display:flex;gap:8px;margin-top:12px}
+    .gallery img{width:100%;height:120px;object-fit:cover;border-radius:8px}
+    .topbar{display:flex;align-items:center;gap:12px;justify-content:center}
+    .badge{background:var(--muted);padding:6px 10px;border-radius:999px;color:var(--accent);font-weight:700}
+    .price-tag{color:var(--accent);font-weight:700}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="topbar">
+      <img src="logo.png" alt="logo" class="logo" onerror="this.style.display='none'"/>
+      <div>
+        <h1>Nama Cafe Kamu</h1>
+        <div class="lead">Santai. Nikmati rasa. Pesan cepat lewat link.</div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div class="cover">
+        <img src="photo1.jpg" alt="cover"/>
+      </div>
+
+      <aside class="order-panel">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div>
+            <div style="font-size:13px;color:#666">Buka setiap hari</div>
+            <div class="price">10:00 - 22:00</div>
+          </div>
+          <div class="badge">Gratis Wi-Fi</div>
+        </div>
+
+        <div style="margin-top:12px" class="muted">Silakan pilih menu di bawah. Setelah klik <strong>ORDER</strong>, Anda akan diarahkan ke form pemesanan.</div>
+
+        <div style="margin-top:14px;display:flex;gap:10px;align-items:center">
+          <!-- Replace FORM_LINK with your Google Form URL -->
+          <a href="FORM_LINK" target="_blank" class="btn">ORDER Sekarang</a>
+          <a href="#menu" class="muted">Lihat Menu ↓</a>
+        </div>
+
+        <div class="gallery">
+          <img src="photo2.jpg" alt="seafood"/>
+          <img src="photo3.jpg" alt="nasi goreng"/>
+        </div>
+
+        <div style="margin-top:12px" class="muted">Contact: +62 812-XXXX-XXXX</div>
+      </aside>
+    </section>
+
+    <section id="menu" style="margin-top:20px">
+      <div class="grid">
+        <div class="card">
+          <div class="cat">Main Course</div>
+          <div class="item"><div class="name">Nasi Goreng Asian Style</div><div>18K</div></div>
+          <div class="item"><div class="name">Nasi Goreng Seafood</div><div>28K</div></div>
+          <div class="item"><div class="name">Nasi Goreng Spicy Chicken</div><div>28K</div></div>
+          <div class="item"><div class="name">Nasi Goreng Ayam Jamur</div><div>28K</div></div>
+          <div class="item"><div class="name">Nasi Ayam Lalapan</div><div>32K</div></div>
+          <div class="item"><div class="name">Nasi Bebek Lalapan</div><div>40K</div></div>
+          <div class="item"><div class="name">Nasi Sop Daging Sapi</div><div>35K</div></div>
+          <div class="item"><div class="name">Sop Iga Sapi</div><div>50K</div></div>
+          <div class="item"><div class="name">Tongseng Daging Sapi</div><div>45K</div></div>
+          <div class="item"><div class="name">Rawon Daging Sapi</div><div>40K</div></div>
+          <div class="item"><div class="name">Kerang Hijau Saos</div><div>35K</div></div>
+          <div class="item"><div class="name">Udang Saos</div><div>40K</div></div>
+          <div class="item"><div class="name">Cumi-cumi Saos</div><div>45K</div></div>
+          <div class="item"><div class="name">Mix Seafood</div><div>40K</div></div>
+          <div class="item"><div class="name">Spaghetti Bolognese</div><div>30K</div></div>
+          <div class="item"><div class="name">Fettuccine Chicken</div><div>30K</div></div>
+          <div class="item"><div class="name">Fettuccine Beef</div><div>35K</div></div>
+        </div>
+
+        <div class="card">
+          <div class="cat">Grill / Steak</div>
+          <div class="item"><div class="name">Beef Tenderloin Steak</div><div>60K</div></div>
+          <div class="item"><div class="name">Beef Striploin Steak</div><div>65K</div></div>
+          <div class="item"><div class="name">Chicken Steak</div><div>52K</div></div>
+
+          <div style="height:12px"></div>
+
+          <div class="cat">Sandwiches</div>
+          <div class="item"><div class="name">Club Sandwich</div><div>28K</div></div>
+          <div class="item"><div class="name">Smoked Beef Sandwich</div><div>25K</div></div>
+          <div class="item"><div class="name">Chicken Steak Sandwich</div><div>30K</div></div>
+          <div class="item"><div class="name">Beef Steak Sandwich</div><div>35K</div></div>
+
+          <div style="height:12px"></div>
+
+          <div class="cat">Snack</div>
+          <div class="item"><div class="name">Mantau</div><div>18K</div></div>
+          <div class="item"><div class="name">French Fries</div><div>14K</div></div>
+          <div class="item"><div class="name">Spicy Chicken Wings</div><div>25K</div></div>
+
+          <div style="height:12px"></div>
+
+          <div class="cat">Additional</div>
+          <div class="item"><div class="name">Nasi</div><div>6K</div></div>
+          <div class="item"><div class="name">Telur</div><div>5K</div></div>
+        </div>
+
+        <div class="card">
+          <div class="cat">Coffee Based</div>
+          <div class="item"><div class="name">Tubruk</div><div>10K</div></div>
+          <div class="item"><div class="name">Espresso</div><div>15K</div></div>
+          <div class="item"><div class="name">Black Coffee</div><div>15K</div></div>
+          <div class="item"><div class="name">Cappuccino</div><div>20K</div></div>
+          <div class="item"><div class="name">Latte</div><div>25K</div></div>
+          <div class="item"><div class="name">Vanilla Latte</div><div>25K</div></div>
+          <div class="item"><div class="name">Caramel Latte</div><div>25K</div></div>
+          <div class="item"><div class="name">Mocha Latte</div><div>25K</div></div>
+          <div class="item"><div class="name">Avocado Coffee</div><div>25K</div></div>
+
+          <div style="height:12px"></div>
+
+          <div class="cat">Single Origin</div>
+          <div class="item"><div class="name">V60</div><div>25K</div></div>
+          <div class="item"><div class="name">Japanese</div><div>25K</div></div>
+        </div>
+
+        <div class="card">
+          <div class="cat">Tea Based & Add-Ons</div>
+          <div class="item"><div class="name">Black Tea</div><div>10K</div></div>
+          <div class="item"><div class="name">Peach Tea</div><div>10K</div></div>
+          <div class="item"><div class="name">Lemon Tea</div><div>10K</div></div>
+          <div class="item"><div class="name">Cheese Cream (Add-On)</div><div>5K</div></div>
+          <div class="item"><div class="name">Espresso (Add-On)</div><div>5K</div></div>
+
+          <div style="height:12px"></div>
+
+          <div class="cat">Signature</div>
+          <div class="item"><div class="name">Rindang Coffee</div><div>25K</div></div>
+          <div class="item"><div class="name">Klepon</div><div>25K</div></div>
+          <div class="item"><div class="name">Blue Island</div><div>20K</div></div>
+          <div class="item"><div class="name">Pinky</div><div>20K</div></div>
+
+          <div style="height:12px"></div>
+
+          <div class="cat">Milk Based</div>
+          <div class="item"><div class="name">Chocolate</div><div>23K</div></div>
+          <div class="item"><div class="name">Choco Vanilla</div><div>23K</div></div>
+          <div class="item"><div class="name">Choco Caramel</div><div>23K</div></div>
+          <div class="item"><div class="name">Choco Hazelnut</div><div>23K</div></div>
+          <div class="item"><div class="name">Red Velvet</div><div>23K</div></div>
+          <div class="item"><div class="name">Matcha</div><div>27K</div></div>
+          <div class="item"><div class="name">Avocado</div><div>20K</div></div>
+          <div class="item"><div class="name">Taro</div><div>23K</div></div>
+          <div class="item"><div class="name">Avocado Choco</div><div>25K</div></div>
+          <div class="item"><div class="name">Cheese Charcoal</div><div>23K</div></div>
+          <div class="item"><div class="name">Strawberry Cake</div><div>23K</div></div>
+        </div>
+
+      </div>
+    </section>
+
+    <footer style="margin-top:18px">
+      <div style="max-width:720px;margin:0 auto">Untuk memesan: klik tombol <strong>ORDER Sekarang</strong> di atas atau scan QR code yang tersedia di cafe. Jika ingin bantuan upload foto atau mengganti nama cafe, bilang saja — aku bantu edit langsung.</div>
+    </footer>
+  </main>
+
+</body>
+</html>
