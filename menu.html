@@ -1,0 +1,226 @@
+<!--
+mini_cafe_menu.html
+Instructions:
+1) Save this file as `mini_cafe_menu.html`.
+2) Place your photos in the same folder and name them: image1.jpg, image2.jpg, image3.jpg, image4.jpg (or change the <img> src to match your filenames).
+3) Replace the placeholder GOOGLE_FORM_LINK with your Google Form URL (search for the form's "Send" -> link).
+4) Open the file in a browser (double-click) to preview. To publish: upload to Netlify, GitHub Pages, or any static hosting.
+
+Notes:
+- The Order button opens the Google Form in a new tab.
+- The menu text is embedded below; edit prices or items directly inside the HTML if needed.
+-->
+
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Menu - Rindang </title>
+  <style>
+    :root{--accent:#7b3f00;--muted:#6b6b6b;--bg:#f7efe6}
+    body{font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; margin:0;background:var(--bg);color:#222}
+    header{background:linear-gradient(90deg,var(--accent),#5b2f12);color:white;padding:28px 20px;text-align:center}
+    .wrap{max-width:980px;margin:22px auto;padding:18px}
+    .hero{display:flex;gap:18px;align-items:center}
+    .hero .gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+    .hero img{width:100%;height:220px;object-fit:cover;border-radius:8px;box-shadow:0 6px 14px rgba(0,0,0,0.12)}
+    .intro{flex:1}
+    h1{margin:0;font-size:26px}
+    p.lead{color:var(--muted);margin-top:8px}
+
+    .order-row{display:flex;gap:12px;align-items:center;margin-top:12px}
+    .btn{background:var(--accent);color:white;padding:10px 16px;border-radius:8px;border:0;cursor:pointer;font-weight:600}
+    .btn.ghost{background:transparent;border:2px solid var(--accent);color:var(--accent)}
+
+    .menu-grid{display:grid;grid-template-columns:1fr 320px;gap:18px;margin-top:22px}
+    .menu{background:white;padding:16px;border-radius:10px;box-shadow:0 6px 18px rgba(0,0,0,0.06)}
+    .side{position:sticky;top:20px;height:max-content}
+
+    .category{margin-bottom:12px}
+    .category h3{margin:0 0 8px 0;color:var(--accent)}
+    .item{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px dashed #eee}
+    .item small{color:var(--muted)}
+
+    footer{margin-top:28px;text-align:center;color:var(--muted);padding:28px 10px}
+
+    @media (max-width:880px){
+      .menu-grid{grid-template-columns:1fr}
+      .hero{flex-direction:column}
+      .hero img{height:160px}
+      .side{position:static}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1> Rindang </h1>
+    <div style="opacity:.95;margin-top:6px">Menu & Pemesanan — scan QR atau klik tombol ORDER</div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero">
+      <div class="gallery">
+        <img src="image2.jpg" alt="makanan 1">
+        <img src="image3.jpg" alt="nasi goreng">
+        <img src="image4.jpg" alt="menu plate">
+        <img src="image1.jpg" alt="interior / tanaman">
+      </div>
+      <div class="intro">
+        <h1>Selamat datang di Rindang </h1>
+        <p class="lead">Santai, ngopi, dan nikmati sajian rumahan kami. Pilih menu favorit lalu tekan tombol <strong>ORDER</strong> untuk melakukan pemesanan melalui form.</p>
+
+        <div class="order-row">
+          <button class="btn" onclick="openOrder()">ORDER Sekarang</button>
+          <button class="btn ghost" onclick="scrollToMenu()">Lihat Menu</button>
+        </div>
+
+        <p style="margin-top:12px;color:var(--muted);font-size:14px">Jika ingin take away, tuliskan 'takeaway' pada kolom Nomor Meja di form.</p>
+      </div>
+    </section>
+
+    <section class="menu-grid">
+      <div class="menu" id="menu">
+        <div class="category">
+          <h3>Main Course</h3>
+          <div class="item"><div>Nasi Goreng Asian Style</div><div>18K</div></div>
+          <div class="item"><div>Nasi Goreng Seafood</div><div>28K</div></div>
+          <div class="item"><div>Nasi Goreng Spicy Chicken</div><div>28K</div></div>
+          <div class="item"><div>Nasi Goreng Ayam Jamur</div><div>28K</div></div>
+          <div class="item"><div>Nasi Ayam Lalapan</div><div>32K</div></div>
+          <div class="item"><div>Nasi Bebek Lalapan</div><div>40K</div></div>
+          <div class="item"><div>Nasi Sop Daging Sapi</div><div>35K</div></div>
+          <div class="item"><div>Sop Iga Sapi</div><div>50K</div></div>
+          <div class="item"><div>Tongseng Daging Sapi</div><div>45K</div></div>
+          <div class="item"><div>Rawon Daging Sapi</div><div>40K</div></div>
+        </div>
+
+        <div class="category">
+          <h3>Grill / Steak</h3>
+          <div class="item"><div>Beef Tenderloin Steak</div><div>60K</div></div>
+          <div class="item"><div>Beef Striploin Steak</div><div>65K</div></div>
+          <div class="item"><div>Chicken Steak</div><div>52K</div></div>
+        </div>
+
+        <div class="category">
+          <h3>Sandwiches</h3>
+          <div class="item"><div>Club Sandwich</div><div>28K</div></div>
+          <div class="item"><div>Smoked Beef Sandwich</div><div>25K</div></div>
+          <div class="item"><div>Chicken Steak Sandwich</div><div>30K</div></div>
+          <div class="item"><div>Beef Steak Sandwich</div><div>35K</div></div>
+        </div>
+
+        <div class="category">
+          <h3>Snack</h3>
+          <div class="item"><div>Mantau</div><div>18K</div></div>
+          <div class="item"><div>French Fries</div><div>14K</div></div>
+          <div class="item"><div>Spicy Chicken Wings</div><div>25K</div></div>
+        </div>
+
+        <div class="category">
+          <h3>Additional</h3>
+          <div class="item"><div>Nasi</div><div>6K</div></div>
+          <div class="item"><div>Telur</div><div>5K</div></div>
+        </div>
+
+        <hr style="margin:18px 0;border:none;border-top:1px solid #eee">
+
+        <div class="category">
+          <h3>Coffee Based</h3>
+          <div class="item"><div>Tubruk</div><div>10K</div></div>
+          <div class="item"><div>Espresso</div><div>15K</div></div>
+          <div class="item"><div>Black Coffee</div><div>15K</div></div>
+          <div class="item"><div>Cappuccino</div><div>20K</div></div>
+          <div class="item"><div>Latte</div><div>25K</div></div>
+          <div class="item"><div>Vanilla Latte</div><div>25K</div></div>
+          <div class="item"><div>Caramel Latte</div><div>25K</div></div>
+          <div class="item"><div>Mocha Latte</div><div>25K</div></div>
+          <div class="item"><div>Avocado Coffee</div><div>25K</div></div>
+        </div>
+
+        <div class="category">
+          <h3>Single Origin</h3>
+          <div class="item"><div>V60</div><div>25K</div></div>
+          <div class="item"><div>Japanese</div><div>25K</div></div>
+        </div>
+
+        <div class="category">
+          <h3>Tea Based</h3>
+          <div class="item"><div>Black Tea</div><div>10K</div></div>
+          <div class="item"><div>Peach Tea</div><div>10K</div></div>
+          <div class="item"><div>Lemon Tea</div><div>10K</div></div>
+        </div>
+
+        <div class="category">
+          <h3>Signature & Milk Based</h3>
+          <div class="item"><div>Rindang Coffee</div><div>25K</div></div>
+          <div class="item"><div>Klepon</div><div>25K</div></div>
+          <div class="item"><div>Blue Island</div><div>20K</div></div>
+          <div class="item"><div>Pinky</div><div>20K</div></div>
+          <div class="item"><div>Chocolate</div><div>23K</div></div>
+          <div class="item"><div>Choco Vanilla</div><div>23K</div></div>
+          <div class="item"><div>Choco Caramel</div><div>23K</div></div>
+          <div class="item"><div>Choco Hazelnut</div><div>23K</div></div>
+          <div class="item"><div>Red Velvet</div><div>23K</div></div>
+          <div class="item"><div>Matcha</div><div>27K</div></div>
+          <div class="item"><div>Avocado</div><div>20K</div></div>
+          <div class="item"><div>Taro</div><div>23K</div></div>
+          <div class="item"><div>Avocado Choco</div><div>25K</div></div>
+          <div class="item"><div>Cheese Charcoal</div><div>23K</div></div>
+          <div class="item"><div>Strawberry Cake</div><div>23K</div></div>
+        </div>
+
+      </div>
+
+      <aside class="side">
+        <div style="background:white;padding:14px;border-radius:10px;box-shadow:0 6px 18px rgba(0,0,0,0.06)">
+          <h3 style="margin-top:0;color:var(--accent)">Cara Pesan</h3>
+          <ol style="padding-left:18px;color:var(--muted);font-size:14px">
+            <li>Pilih menu di halaman ini.</li>
+            <li>Tekan tombol <strong>ORDER</strong> untuk membuka form pemesanan.</li>
+            <li>Isi nama, meja, dan catatan. Submit.</li>
+            <li>Pesanan akan dikirim ke dapur/bar.</li>
+          </ol>
+
+          <div style="margin-top:12px;text-align:center">
+            <button class="btn" style="width:100%" onclick="openOrder()">Order Sekarang</button>
+          </div>
+
+          <div style="margin-top:14px;text-align:center;color:var(--muted);font-size:13px">
+            <div style="margin-bottom:6px">Atau scan QR di meja</div>
+            <div style="background:#fafafa;padding:8px;border-radius:8px;border:1px dashed #eee">(Pasang QR di meja dengan link form)</div>
+          </div>
+        </div>
+
+        <div style="background:white;margin-top:14px;padding:12px;border-radius:10px;box-shadow:0 6px 18px rgba(0,0,0,0.06)">
+          <h4 style="margin:0 0 8px 0;color:var(--accent)">Info</h4>
+          <p style="color:var(--muted);font-size:13px;margin:0">Jam buka: 11.00 - 23.00<br>Layanan: Dine-in & Takeaway</p>
+        </div>
+      </aside>
+    </section>
+
+    <footer>
+      © <span id="year"></span> Rindang — Dibuat otomatis
+    </footer>
+  </main>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // <-- REPLACE THIS LINK with your Google Form link
+    const GOOGLE_FORM_LINK = 'PASTE_GOOGLE_FORM_LINK_HERE';
+
+    function openOrder(){
+      if(GOOGLE_FORM_LINK === 'PASTE_GOOGLE_FORM_LINK_HERE'){
+        alert('Silakan edit file dan ganti variabel GOOGLE_FORM_LINK dengan link Google Form kamu.');
+        return;
+      }
+      window.open(GOOGLE_FORM_LINK, '_blank');
+    }
+
+    function scrollToMenu(){
+      document.getElementById('menu').scrollIntoView({behavior:'smooth'});
+    }
+  </script>
+</body>
+</html>
