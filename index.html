@@ -387,11 +387,28 @@
       const payload = { secret: SECRET_TOKEN, orderId, name:cname, pickup, items, total, adminEmail: ADMIN_EMAIL };
       try{
         if(scriptUrl && !scriptUrl.includes('REPLACE_WITH')){
-          const r = await fetch(scriptUrl, { method:'POST', headers:{ 'Content-Type':'application/json' }, body: JSON.stringify(payload) });
-          const j = await r.json();
-          if(j.success) alert('Pesanan terkirim! ' + orderId); else alert('Server: ' + (j.message||'gagal'));
-        } else {
-          alert('Demo order: ' + orderId + '\\nTotal: ' + formatRp(total));
+
+    // --- FORM SUBMIT (ANTI-CORS) ---
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.action = scriptUrl;   // URL /exec
+    form.style.display = 'none';
+
+    const input = document.createElement('input');
+    input.type = 'hidden';
+    input.name = 'payload';
+    input.value = JSON.stringify(payload);
+
+    form.appendChild(input);
+    document.body.appendChild(form);
+
+    alert('Pesanan terkirim: ' + orderId);
+    form.submit();
+
+} else {
+    alert('Demo order: ' + orderId + '\nTotal: ' + formatRp(total));
+}
+
         }
         cart={}; renderCart(); document.getElementById('customerName').value=''; document.getElementById('pickupLoc').value=''; document.getElementById('note').value='';
       } catch(err){ alert('Error: ' + err.message); console.error(err); }
