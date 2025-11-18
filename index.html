@@ -3,173 +3,130 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Lazuardi Café — Visitor Dashboard</title>
+  <title>Rindang — Visitor Dashboard</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
-    :root {
-      --accent-forest: #2e7d32; /* hijau pepohonan */
-      --accent-wood: #6d4c41;   /* coklat kayu */
-      --muted: #6b7280;
+    :root{
+      --forest:#2e7d32; /* hijau pepohonan */
+      --wood:#6d4c41;   /* coklat kayu */
+      --muted:#6b7280;
+      --glass: rgba(255,255,255,0.6);
     }
-    body {
-      font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial;
+    html,body{height:100%}
+    body{
+      font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial;
+      background: linear-gradient(180deg, #fbfbfb, #f7f8f6);
+      color:#222;
     }
-    .brand {
-      color: var(--accent-forest);
-      font-weight: 700;
+    .brand{color:var(--forest);font-weight:700;display:flex;align-items:center;gap:.5rem}
+    header{padding-bottom:0.5rem}
+    .hero{
+      background:linear-gradient(180deg, rgba(46,125,50,0.07), rgba(109,76,65,0.03));
+      padding:2.5rem 1.25rem;border-radius:12px;box-shadow:0 6px 18px rgba(45,45,45,0.04);
     }
-    header, footer {
-      border-bottom: 1px solid #e0e0e0;
-    }
-    .hero {
-      background: linear-gradient(180deg, rgba(46,125,50,0.1), rgba(109,76,65,0.05));
-      padding: 3.5rem 1.25rem;
-      border-radius: 12px;
-    }
-    .photo-card {
-      border-radius: 12px;
-      overflow: hidden;
-    }
-    .menu-price {
-      font-weight: 700;
-      color: var(--accent-wood);
-    }
-    .section-title {
-      font-size: 1.125rem;
-      font-weight: 700;
-      color: var(--accent-forest);
-    }
-    .small-muted {
-      color: var(--muted);
-    }
-    .gallery-img {
-      object-fit: cover;
-      height: 180px;
-      width: 100%;
-    }
-    @media(min-width: 992px) {
-      .gallery-img {
-        height: 220px;
-      }
-    }
+    .hero .lead{color:var(--muted)}
+
+    /* Carousel */
+    .carousel-item img{height:420px;object-fit:cover;border-radius:10px}
+
+    /* Masonry gallery using CSS columns */
+    .masonry{column-count:4;column-gap:1rem}
+    .masonry-item{display:inline-block;width:100%;margin:0 0 1rem;border-radius:10px;overflow:hidden}
+    .masonry-item img{width:100%;height:auto;display:block;transition:transform .35s ease}
+    .masonry-item:hover img{transform:scale(1.04)}
+    @media(max-width:1200px){.masonry{column-count:3}}
+    @media(max-width:768px){.masonry{column-count:2}}
+    @media(max-width:480px){.masonry{column-count:1}}
+
+    /* Menu cards */
+    .menu-price{font-weight:700;color:var(--wood)}
+    .card-glass{background:linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.82));border-radius:12px}
+
+    .section-title{font-size:1.125rem;font-weight:700;color:var(--forest)}
+    .small-muted{color:var(--muted)}
+
+    /* CTA bar fixed bottom on mobile */
+    .cta-bottom{position:fixed;left:0;right:0;bottom:12px;padding:0 1rem;z-index:1030}
+    .cta-inner{max-width:980px;margin:0 auto;display:flex;gap:.5rem}
+
+    /* admin panel */
+    .admin-panel{position:fixed;right:12px;bottom:12px;background:#fff;border:1px solid #eee;padding:12px;border-radius:10px;box-shadow:0 6px 24px rgba(0,0,0,0.08);z-index:2000;max-width:360px}
+    .admin-toggle{position:fixed;right:12px;bottom:12px;z-index:1999}
+
+    footer{color:var(--muted);padding-top:1.5rem;padding-bottom:2rem}
+    .logo-img{height:40px;width:40px;object-fit:contain;border-radius:8px}
   </style>
 </head>
 <body>
 <div class="container py-4">
-  <header class="d-flex align-items-center justify-content-between mb-4">
-    <div>
-      <a class="brand text-decoration-none" href="#">
-        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-cup-fill me-2" viewBox="0 0 16 16">
-          <path d="M.11 3.243A1 1 0 0 1 1.08 2h8.84a1 1 0 0 1 .97 1.243L10.5 9H13a2 2 0 0 0 0-4h-.5a1 1 0 0 1 0-2H13a4 4 0 1 1-4 4H3a2 2 0 0 1-2-2V4a1 1 0 0 1-.89-.757z"/>
-        </svg>
-        Lazuardi Café
-      </a>
-      <div class="small-muted">Jalan Mawar No.12 — Kampus Lazuardi</div>
+  <header class="d-flex align-items-center justify-content-between mb-3">
+    <div class="d-flex align-items-center gap-2">
+      <img id="brandLogo" src="https://via.placeholder.com/80x80?text=Logo" alt="logo" class="logo-img">
+      <div>
+        <a class="brand text-decoration-none" href="#">Rindang</a>
+        <div class="small-muted">Jalan Terminal, Palacari Ilir, RT 01, Batu-batu, Muara Badak, Kutai Kartanegara, Kaltim - Rindang</div>
+      </div>
     </div>
-    <div>
-      <a id="orderLink" class="btn btn-outline-success me-2" href="https://wa.me/c/6282337870246" target="_blank">Pesan Sekarang</a>
-      <a class="btn btn-outline-secondary" href="#contact">Hubungi</a>
+    <div class="d-flex align-items-center">
+      <a id="orderLink" class="btn btn-success me-2" href="https://wa.me/c/6282337870246" target="_blank">Pesan via WhatsApp</a>
+      <a class="btn btn-outline-secondary" href="#contact">Lokasi & Kontak</a>
     </div>
   </header>
 
+  <!-- HERO with carousel -->
   <section class="hero mb-4">
-    <div class="row align-items-center">
-      <div class="col-lg-6">
+    <div class="row g-3 align-items-center">
+      <div class="col-lg-7">
         <h1 class="mb-2">Suasana hangat, kopi yang menenangkan</h1>
-        <p class="small-muted">
-          Nikmati kopi spesial dan hidangan rumahan di ruang yang didesain untuk diskusi kreatif dan kerja santai.
-          Lihat galeri, jelajahi menu, lalu klik "Pesan Sekarang" jika ingin memesannya.
-        </p>
+        <p class="lead small-muted">Rindang adalah tempat bertemu, belajar, dan berkarya. Kami menyajikan biji kopi lokal, makanan rumahan, dan ruang yang nyaman untuk obrolan panjang.</p>
         <div class="mt-3">
           <a class="btn btn-success me-2" href="https://wa.me/c/6282337870246" target="_blank">Pesan Sekarang</a>
           <a class="btn btn-outline-secondary" href="#gallery">Lihat Galeri</a>
         </div>
+        <div class="mt-3 small-muted">Jam Buka: Setiap Hari • 11:00–23:00 • Rating 4.8 ★</div>
       </div>
-      <div class="col-lg-6 mt-3 mt-lg-0">
-        <div class="card shadow-sm">
-          <img src="https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?q=80&w=1400&auto=format&fit=crop&ixlib=rb-4.0.3&s=7f5b0b7c2b8b7c8f3f8a6b7e6d2f9f6d"
-               alt="Lazuardi Cafe interior"
-               style="width:100%;height:260px;object-fit:cover;border-radius:8px">
-          <div class="card-body">
-            <div class="d-flex justify-content-between align-items-center">
-              <div>
-                <strong>Jam Buka</strong>
-                <div class="small-muted">Senin — Minggu • 08:00 — 22:00</div>
-              </div>
-              <div class="text-end">
-                <div class="small-muted">Rating</div>
-                <div><strong>4.8 ★</strong></div>
-              </div>
-            </div>
+      <div class="col-lg-5">
+        <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
+          <div class="carousel-inner rounded-3 overflow-hidden" id="heroInner">
+            <!-- hero images will be injected here -->
           </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev"><span class="carousel-control-prev-icon"></span></button>
+          <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next"><span class="carousel-control-next-icon"></span></button>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- Gallery Masonry -->
   <section id="gallery" class="mb-5">
     <div class="d-flex justify-content-between align-items-center mb-3">
       <div class="section-title">Galeri Suasana</div>
-      <div class="small-muted">Scroll untuk melihat foto — klik untuk memperbesar</div>
+      <div class="small-muted">Klik untuk memperbesar • Koleksi foto interior, menu, dan momen</div>
     </div>
-    <div class="row g-3">
-      <!-- gallery items -->
-      <div class="col-6 col-md-4 col-lg-3">
-        <div class="photo-card bg-light">
-          <img src="https://images.unsplash.com/photo-1526318472351-c75fcf070b0f?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=9f1d9b3b2a5e9d2c7c9e4a8c"
-               alt="cozy corner"
-               class="gallery-img"
-               data-bs-toggle="modal" data-bs-target="#imgModal"
-               data-src="https://images.unsplash.com/photo-1526318472351-c75fcf070b0f?q=80&w=1400&auto=format&fit=crop&ixlib=rb-4.0.3&s=9f1d9b3b2a5e9d2c7c9e4a8c">
-        </div>
-      </div>
-      <!-- more images ... -->
+    <div class="masonry" id="masonry">
+      <!-- gallery images will be injected here -->
     </div>
   </section>
 
+  <!-- Menu section (short list with nicer visuals) -->
   <section id="menu" class="mb-5">
     <div class="d-flex justify-content-between align-items-center mb-3">
       <div class="section-title">Menu Pilihan</div>
-      <div class="small-muted">Harga dalam IDR</div>
+      <div class="small-muted">Harga dalam IDR • Klik Pesan untuk diarahkan ke WhatsApp</div>
     </div>
 
-    <div class="row g-3">
-      <!-- example menu item -->
-      <div class="col-12 col-md-6 col-lg-4">
-        <div class="card h-100">
-          <div class="row g-0">
-            <div class="col-5">
-              <img src="https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?q=80&w=600&auto=format&fit=crop&ixlib=rb-4.0.3&s=7f5b0b7c2b8b7c8f3f8a6b7e6d2f9f6d"
-                   alt="Cappuccino"
-                   style="width:100%;height:100%;object-fit:cover">
-            </div>
-            <div class="col-7">
-              <div class="card-body">
-                <h5 class="card-title">Rindang Coffee</h5>
-                <p class="small-muted mb-2">Espresso + steamed milk + foam. Pilihan susu: full cream.</p>
-                <div class="d-flex justify-content-between align-items-center">
-                  <div class="menu-price">Rp 25.000</div>
-                  <a href="https://wa.me/c/6282337870246" target="_blank" class="btn btn-sm btn-outline-success">Pesan</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- add more menu items similarly -->
+    <div class="row g-3" id="menuList">
+      <!-- menu items injected here -->
     </div>
   </section>
 
+  <!-- About & Contact -->
   <section id="about" class="mb-5">
     <div class="row g-3">
       <div class="col-md-6">
-        <div class="card p-3 h-100">
+        <div class="card p-3 h-100 card-glass">
           <h5>Tentang Rindang</h5>
-          <p class="small-muted">
-            Rindang adalah Tempat teduh yang merayakan percakapan panjang, ide-ide sederhana,
-            dan kopi yang dibuat dengan penuh perhatian. Kami menggunakan biji lokal, menyajikan makanan, dan
-            menyediakan koneksi Wi-Fi gratis.
-          </p>
+          <p class="small-muted">Rindang merayakan percakapan panjang dan kopi yang dibuat dengan perhatian. Kami menggunakan biji lokal, menyajikan makanan rumahan, dan menyediakan Wi‑Fi untuk pelajar serta pekerja kreatif.</p>
           <ul class="small-muted">
             <li>Wifi & colokan tersedia</li>
             <li>Area indoor & outdoor</li>
@@ -178,26 +135,25 @@
         </div>
       </div>
       <div class="col-md-6">
-        <div class="card p-3 h-100">
+        <div class="card p-3 h-100 card-glass">
           <h5 id="contact">Kontak & Lokasi</h5>
           <p class="small-muted mb-1"><strong>Alamat:</strong> Jalan Terminal, Palacari Ilir, RT 01, Batu-batu, Muara Badak, Kutai Kartanegara, Kaltim - Rindang</p>
           <p class="small-muted mb-1"><strong>Telepon:</strong> <a href="tel:+6282337870246">+62 823-3787-0246</a></p>
-          <p class="small-muted mb-1"><strong>Instagram:</strong> <a href="https://instagram.com/rindang.coffee" target="_blank">@rindang.coffee</a></p>
+          <p class="small-muted mb-1"><strong>Instagram:</strong> <a href="https://instagram.com/yourcafe" target="_blank">@rindang.coffee</a></p>
+
           <div class="mt-2">
-            <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126915.123456789!2d106.827153!3d-6.175110!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzfCsDAwJzAwLjAiTiAxMDZMMTc3JzAwLjAiRQ!5e0!3m2!1sid!2sid!4v0000000000000"
-              width="100%" height="200" style="border:0;border-radius:8px" allowfullscreen="" loading="lazy"></iframe>
-            <div class="small-muted mt-2">Klik peta untuk arah</div>
+            <!-- Link to maps.app (opens in new tab) -->
+            <a href="https://maps.app.goo.gl/bgCHnNhFi1ytCFMX8" target="_blank" class="btn btn-outline-secondary btn-sm me-2">Buka di Maps</a>
+            <a href="https://www.google.com/maps/dir/?api=1&destination=Kampus+Lazuardi" target="_blank" class="btn btn-outline-primary btn-sm">Dapatkan Arah</a>
+            <div class="small-muted mt-2">Peta akan terbuka di Google Maps untuk petunjuk arah.</div>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <footer class="pt-4 pb-2 text-center">
-    <div class="small-muted">
-      © Rindang • Informational site — Tidak menerima pesanan langsung dari halaman ini. Untuk memesan, klik tombol “Pesan Sekarang”.
-    </div>
+  <footer class="text-center">
+    <div class="small-muted">© Rindang • Informational site — Tidak menerima pesanan langsung dari halaman ini. Untuk memesan, klik tombol "Pesan via WhatsApp".</div>
   </footer>
 </div>
 
@@ -205,8 +161,9 @@
 <div class="modal fade" id="imgModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
-      <div class="modal-body p-0">
+      <div class="modal-body p-0 position-relative">
         <img id="modalImg" src="" alt="photo" style="width:100%;height:100%;object-fit:cover">
+        <div id="modalCaption" class="position-absolute" style="left:12px;bottom:12px;background:rgba(0,0,0,0.45);color:#fff;padding:6px 10px;border-radius:8px;font-size:.95rem"></div>
       </div>
       <div class="modal-footer small-muted">
         <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-dismiss="modal">Tutup</button>
@@ -215,22 +172,132 @@
   </div>
 </div>
 
+<!-- Admin panel (for you to paste your image URLs & logo) -->
+<button class="btn btn-sm btn-outline-secondary admin-toggle d-none d-md-block" id="openAdmin">Edit Images</button>
+<div class="admin-panel" id="adminPanel" style="display:none">
+  <h6>Upload gambar cepat</h6>
+  <div class="small-muted mb-2">Tempelkan URL gambar (satu per baris) untuk galeri. Untuk hero, masukkan 3 URL utama (urut dari atas).</div>
+  <label class="form-label">Logo URL</label>
+  <input id="logoUrl" class="form-control form-control-sm mb-2" placeholder="https://.../logo.png">
+  <label class="form-label">Hero images (3 baris)</label>
+  <textarea id="heroUrls" class="form-control form-control-sm mb-2" rows="3" placeholder="satu URL per baris"></textarea>
+  <label class="form-label">Gallery image URLs (max 20)</label>
+  <textarea id="galleryUrls" class="form-control form-control-sm mb-2" rows="6" placeholder="satu URL per baris"></textarea>
+  <label class="form-label">Menu JSON (opsional)</label>
+  <textarea id="menuJson" class="form-control form-control-sm mb-2" rows="4" placeholder='[ {"title":"Cappuccino","price":22000,"img":"https://..."}, ... ]'></textarea>
+  <div class="d-flex gap-2">
+    <button class="btn btn-sm btn-success" id="applyBtn">Apply</button>
+    <button class="btn btn-sm btn-outline-danger" id="resetBtn">Reset to default</button>
+  </div>
+  <div class="small-muted mt-2">Tip: Upload foto ke Google Photos / Imgur / GitHub & gunakan URL publik. Optimal: JPG/WEBP, lebar 1200–2000px.</div>
+</div>
+
+<!-- Mobile CTA -->
+<div class="cta-bottom d-lg-none">
+  <div class="cta-inner">
+    <a href="https://wa.me/c/6282337870246" target="_blank" class="btn btn-success w-100">Pesan via WhatsApp</a>
+  </div>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-// Gallery click to modal
-document.querySelectorAll('.gallery-img').forEach(img => {
-  img.style.cursor = 'pointer';
-  img.addEventListener('click', e => {
-    const src = img.getAttribute('data-src') || img.src;
-    document.getElementById('modalImg').src = src;
+// default demo assets (used when no custom images provided)
+const DEFAULT = {
+  logo: 'https://via.placeholder.com/80x80?text=Logo',
+  hero: [
+    'https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?q=80&w=1400&auto=format&fit=crop&ixlib=rb-4.0.3&s=7f5b0b7c2b8b7c8f3f8a6b7e6d2f9f6d',
+    'https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=1400&auto=format&fit=crop&ixlib=rb-4.0.3&s=b6a6f1a2c4d5e6f7a8b9c0d1',
+    'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=1400&auto=format&fit=crop&ixlib=rb-4.0.3&s=3a8b9e6d2c4f7a1b2c3d4e5f'
+  ],
+  gallery:[
+    'https://images.unsplash.com/photo-1526318472351-c75fcf070b0f?q=80&w=900&auto=format&fit=crop&ixlib=rb-4.0.3&s=9f1d9b3b2a5e9d2c7c9e4a8c',
+    'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=900&auto=format&fit=crop&ixlib=rb-4.0.3&s=8c3a2e6f9b1f5d8a0b6c9d5e',
+    'https://images.unsplash.com/photo-1511920170033-f8396924c348?q=80&w=900&auto=format&fit=crop&ixlib=rb-4.0.3&s=2c9be1d3c6e7a9f0b5d3c4a7',
+    'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=900&auto=format&fit=crop&ixlib=rb-4.0.3&s=5d9a2c6e1b3a7e9f0d4c5b6a',
+    'https://images.unsplash.com/photo-1523206489230-c0120f3f1618?q=80&w=900&auto=format&fit=crop&ixlib=rb-4.0.3&s=7e8a3c6d4f2b1a9c0d3e5f6',
+    'https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=900&auto=format&fit=crop&ixlib=rb-4.0.3&s=f6b4e8a7c3d2b1e9f0a6c5d4'
+  ],
+  menu:[
+    {title:'Cappuccino',price:22000,img:'https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=7f5b0b7c2b8b7c8f3f8a6b7e6d2f9f6d'},
+    {title:'Espresso',price:12000,img:'https://images.unsplash.com/photo-1511920170033-f8396924c348?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=2c9be1d3c6e7a9f0b5d3c4a7'},
+    {title:'Nasi Goreng Special',price:28000,img:'https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=b6a6f1a2c4d5e6f7a8b9c0d1'}
+  ]
+};
+
+function buildHero(images){
+  const inner = document.getElementById('heroInner'); inner.innerHTML='';
+  images.slice(0,3).forEach((src,i)=>{
+    const div = document.createElement('div'); div.className = 'carousel-item' + (i===0? ' active':'');
+    const img = document.createElement('img'); img.className='d-block w-100'; img.src = src; img.alt = 'hero '+(i+1);
+    div.appendChild(img); inner.appendChild(div);
   });
+}
+
+function buildGallery(list){
+  const mason = document.getElementById('masonry'); mason.innerHTML='';
+  list.slice(0,20).forEach((src,idx)=>{
+    const div = document.createElement('div'); div.className='masonry-item';
+    const img = document.createElement('img'); img.src = src; img.alt = 'gallery '+(idx+1);
+    img.setAttribute('data-caption','Foto ' + (idx+1));
+    img.loading='lazy';
+    img.addEventListener('click', ()=>{ openModal(src, img.getAttribute('data-caption') || ''); });
+    div.appendChild(img); mason.appendChild(div);
+  });
+}
+
+function buildMenu(menu){
+  const list = document.getElementById('menuList'); list.innerHTML='';
+  menu.forEach(m=>{
+    const col = document.createElement('div'); col.className='col-12 col-md-6 col-lg-4';
+    col.innerHTML = `
+      <div class="card card-glass h-100 shadow-sm">
+        <img src="${m.img}" class="card-img-top" alt="${m.title}" style="height:220px;object-fit:cover;border-top-left-radius:12px;border-top-right-radius:12px">
+        <div class="card-body">
+          <h5 class="card-title">${m.title}</h5>
+          <p class="small-muted mb-2">${m.desc || ''}</p>
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="menu-price">Rp ${m.price.toLocaleString('id-ID')}</div>
+            <a href="https://wa.me/c/6282337870246" target="_blank" class="btn btn-sm btn-outline-success">Pesan</a>
+          </div>
+        </div>
+      </div>
+    `;
+    list.appendChild(col);
+  });
+}
+
+function openModal(src, caption){
+  document.getElementById('modalImg').src = src; document.getElementById('modalCaption').innerText = caption || '';
+  const modal = new bootstrap.Modal(document.getElementById('imgModal'));
+  modal.show();
+}
+
+// apply defaults on load
+function applyDefaults(){
+  document.getElementById('brandLogo').src = DEFAULT.logo;
+  buildHero(DEFAULT.hero);
+  buildGallery(DEFAULT.gallery);
+  buildMenu(DEFAULT.menu);
+}
+
+// admin panel interactions
+document.getElementById('openAdmin').addEventListener('click', ()=>{ const p = document.getElementById('adminPanel'); p.style.display = p.style.display === 'none' ? 'block' : 'none'; });
+
+document.getElementById('applyBtn').addEventListener('click', ()=>{
+  const logo = document.getElementById('logoUrl').value.trim();
+  const heroRaw = document.getElementById('heroUrls').value.trim();
+  const galleryRaw = document.getElementById('galleryUrls').value.trim();
+  const menuRaw = document.getElementById('menuJson').value.trim();
+  if(logo) document.getElementById('brandLogo').src = logo;
+  if(heroRaw){ const hero = heroRaw.split('\n').map(s=>s.trim()).filter(Boolean); if(hero.length) buildHero(hero); }
+  if(galleryRaw){ const gal = galleryRaw.split('\n').map(s=>s.trim()).filter(Boolean); if(gal.length) buildGallery(gal); }
+  if(menuRaw){ try{ const menu = JSON.parse(menuRaw); if(Array.isArray(menu)) buildMenu(menu); else alert('Format menu JSON salah — harus array'); }catch(e){ alert('JSON menu error: '+e.message) }}
 });
 
-// Order link already set to WhatsApp
-const ORDER_LINK = 'https://wa.me/c/6282337870246';
-document.querySelectorAll('#orderLink, a.btn.btn-success, a.btn.btn-outline-success').forEach(a=>{
-  a.href = ORDER_LINK;
-});
+document.getElementById('resetBtn').addEventListener('click', ()=>{ if(confirm('Reset ke gambar default?')){ document.getElementById('logoUrl').value=''; document.getElementById('heroUrls').value=''; document.getElementById('galleryUrls').value=''; document.getElementById('menuJson').value=''; applyDefaults(); }});
+
+// init
+applyDefaults();
 </script>
 </body>
 </html>
