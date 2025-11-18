@@ -3,31 +3,71 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Rindang — Visitor Dashboard</title>
+  <title>Lazuardi Café — Visitor Dashboard</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
-    :root{--accent:#7c3aed;--muted:#6b7280}
-    body{font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial;}
-    .hero{background:linear-gradient(180deg, rgba(124,58,237,0.06), rgba(124,58,237,0.02));padding:3.5rem 1.25rem;border-radius:12px}
-    .brand{color:var(--accent);font-weight:700}
-    .photo-card{border-radius:12px;overflow:hidden}
-    .menu-price{font-weight:700}
-    .section-title{font-size:1.125rem;font-weight:700}
-    .small-muted{color:var(--muted)}
-    .gallery-img{object-fit:cover;height:180px;width:100%}
-    footer{color:var(--muted)}
-    @media(min-width:992px){.gallery-img{height:220px}}
+    :root {
+      --accent-forest: #2e7d32; /* hijau pepohonan */
+      --accent-wood: #6d4c41;   /* coklat kayu */
+      --muted: #6b7280;
+    }
+    body {
+      font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial;
+    }
+    .brand {
+      color: var(--accent-forest);
+      font-weight: 700;
+    }
+    header, footer {
+      border-bottom: 1px solid #e0e0e0;
+    }
+    .hero {
+      background: linear-gradient(180deg, rgba(46,125,50,0.1), rgba(109,76,65,0.05));
+      padding: 3.5rem 1.25rem;
+      border-radius: 12px;
+    }
+    .photo-card {
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .menu-price {
+      font-weight: 700;
+      color: var(--accent-wood);
+    }
+    .section-title {
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: var(--accent-forest);
+    }
+    .small-muted {
+      color: var(--muted);
+    }
+    .gallery-img {
+      object-fit: cover;
+      height: 180px;
+      width: 100%;
+    }
+    @media(min-width: 992px) {
+      .gallery-img {
+        height: 220px;
+      }
+    }
   </style>
 </head>
 <body>
 <div class="container py-4">
   <header class="d-flex align-items-center justify-content-between mb-4">
     <div>
-      <a class="brand text-decoration-none" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-cup-fill me-2" viewBox="0 0 16 16"><path d="M.11 3.243A1 1 0 0 1 1.08 2h8.84a1 1 0 0 1 .97 1.243L10.5 9H13a2 2 0 0 0 0-4h-.5a1 1 0 0 1 0-2H13a4 4 0 1 1-4 4H3a2 2 0 0 1-2-2V4a1 1 0 0 1-.89-.757z"/></svg> Rindang</a>
-      <div class="small-muted">Rindang Coffee, Jalan Terminal, Placari Ilir, RT 01, Batu-batu, Muara Badak, Kaltim — Rindang Coffee</div>
+      <a class="brand text-decoration-none" href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-cup-fill me-2" viewBox="0 0 16 16">
+          <path d="M.11 3.243A1 1 0 0 1 1.08 2h8.84a1 1 0 0 1 .97 1.243L10.5 9H13a2 2 0 0 0 0-4h-.5a1 1 0 0 1 0-2H13a4 4 0 1 1-4 4H3a2 2 0 0 1-2-2V4a1 1 0 0 1-.89-.757z"/>
+        </svg>
+        Lazuardi Café
+      </a>
+      <div class="small-muted">Jalan Mawar No.12 — Kampus Lazuardi</div>
     </div>
     <div>
-      <a id="orderLink" class="btn btn-outline-primary me-2" href="https://example.com/order" target="_blank">Pesan Sekarang</a>
+      <a id="orderLink" class="btn btn-outline-success me-2" href="https://wa.me/c/6282337870246" target="_blank">Pesan Sekarang</a>
       <a class="btn btn-outline-secondary" href="#contact">Hubungi</a>
     </div>
   </header>
@@ -36,20 +76,25 @@
     <div class="row align-items-center">
       <div class="col-lg-6">
         <h1 class="mb-2">Suasana hangat, kopi yang menenangkan</h1>
-        <p class="small-muted">Nikmati kopi spesial dan hidangan rumahan di ruang yang didesain untuk diskusi kreatif dan kerja santai. Lihat galeri, jelajahi menu, lalu klik "Pesan Sekarang" jika ingin memesannya.</p>
+        <p class="small-muted">
+          Nikmati kopi spesial dan hidangan rumahan di ruang yang didesain untuk diskusi kreatif dan kerja santai.
+          Lihat galeri, jelajahi menu, lalu klik "Pesan Sekarang" jika ingin memesannya.
+        </p>
         <div class="mt-3">
-          <a class="btn btn-primary me-2" href="https://example.com/order" target="_blank">Pesan Sekarang</a>
+          <a class="btn btn-success me-2" href="https://wa.me/c/6282337870246" target="_blank">Pesan Sekarang</a>
           <a class="btn btn-outline-secondary" href="#gallery">Lihat Galeri</a>
         </div>
       </div>
       <div class="col-lg-6 mt-3 mt-lg-0">
         <div class="card shadow-sm">
-          <img src="https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?q=80&w=1400&auto=format&fit=crop&ixlib=rb-4.0.3&s=7f5b0b7c2b8b7c8f3f8a6b7e6d2f9f6d" alt="Lazuardi Cafe interior" style="width:100%;height:260px;object-fit:cover;border-radius:8px">
+          <img src="https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?q=80&w=1400&auto=format&fit=crop&ixlib=rb-4.0.3&s=7f5b0b7c2b8b7c8f3f8a6b7e6d2f9f6d"
+               alt="Lazuardi Cafe interior"
+               style="width:100%;height:260px;object-fit:cover;border-radius:8px">
           <div class="card-body">
             <div class="d-flex justify-content-between align-items-center">
               <div>
                 <strong>Jam Buka</strong>
-                <div class="small-muted">Setiap hari • 11:00 — 23:00</div>
+                <div class="small-muted">Senin — Minggu • 08:00 — 22:00</div>
               </div>
               <div class="text-end">
                 <div class="small-muted">Rating</div>
@@ -71,25 +116,14 @@
       <!-- gallery items -->
       <div class="col-6 col-md-4 col-lg-3">
         <div class="photo-card bg-light">
-          <img src="https://images.unsplash.com/photo-1526318472351-c75fcf070b0f?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=9f1d9b3b2a5e9d2c7c9e4a8c" alt="cozy corner" class="gallery-img" data-bs-toggle="modal" data-bs-target="#imgModal" data-src="https://images.unsplash.com/photo-1526318472351-c75fcf070b0f?q=80&w=1400&auto=format&fit=crop&ixlib=rb-4.0.3&s=9f1d9b3b2a5e9d2c7c9e4a8c">
+          <img src="https://images.unsplash.com/photo-1526318472351-c75fcf070b0f?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=9f1d9b3b2a5e9d2c7c9e4a8c"
+               alt="cozy corner"
+               class="gallery-img"
+               data-bs-toggle="modal" data-bs-target="#imgModal"
+               data-src="https://images.unsplash.com/photo-1526318472351-c75fcf070b0f?q=80&w=1400&auto=format&fit=crop&ixlib=rb-4.0.3&s=9f1d9b3b2a5e9d2c7c9e4a8c">
         </div>
       </div>
-      <div class="col-6 col-md-4 col-lg-3">
-        <div class="photo-card bg-light">
-          <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=8c3a2e6f9b1f5d8a0b6c9d5e" alt="coffee closeup" class="gallery-img" data-bs-toggle="modal" data-bs-target="#imgModal" data-src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=1400&auto=format&fit=crop&ixlib=rb-4.0.3&s=8c3a2e6f9b1f5d8a0b6c9d5e">
-        </div>
-      </div>
-      <div class="col-6 col-md-4 col-lg-3">
-        <div class="photo-card bg-light">
-          <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=3a8b9e6d2c4f7a1b2c3d4e5f" alt="barista at work" class="gallery-img" data-bs-toggle="modal" data-bs-target="#imgModal" data-src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=1400&auto=format&fit=crop&ixlib=rb-4.0.3&s=3a8b9e6d2c4f7a1b2c3d4e5f">
-        </div>
-      </div>
-      <div class="col-6 col-md-4 col-lg-3">
-        <div class="photo-card bg-light">
-          <img src="https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=7f5b0b7c2b8b7c8f3f8a6b7e6d2f9f6d" alt="interior" class="gallery-img" data-bs-toggle="modal" data-bs-target="#imgModal" data-src="https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?q=80&w=1400&auto=format&fit=crop&ixlib=rb-4.0.3&s=7f5b0b7c2b8b7c8f3f8a6b7e6d2f9f6d">
-        </div>
-      </div>
-      <!-- add more images as needed -->
+      <!-- more images ... -->
     </div>
   </section>
 
@@ -100,66 +134,29 @@
     </div>
 
     <div class="row g-3">
+      <!-- example menu item -->
       <div class="col-12 col-md-6 col-lg-4">
         <div class="card h-100">
           <div class="row g-0">
             <div class="col-5">
-              <img src="https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?q=80&w=600&auto=format&fit=crop&ixlib=rb-4.0.3&s=7f5b0b7c2b8b7c8f3f8a6b7e6d2f9f6d" alt="Cappuccino" style="width:100%;height:100%;object-fit:cover">
+              <img src="https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?q=80&w=600&auto=format&fit=crop&ixlib=rb-4.0.3&s=7f5b0b7c2b8b7c8f3f8a6b7e6d2f9f6d"
+                   alt="Cappuccino"
+                   style="width:100%;height:100%;object-fit:cover">
             </div>
             <div class="col-7">
               <div class="card-body">
-                <h5 class="card-title">Cappuccino</h5>
-                <p class="small-muted mb-2">Espresso + steamed milk + foam. Pilihan susu: full cream / oat.</p>
+                <h5 class="card-title">Rindang Coffee</h5>
+                <p class="small-muted mb-2">Espresso + steamed milk + foam. Pilihan susu: full cream.</p>
                 <div class="d-flex justify-content-between align-items-center">
-                  <div class="menu-price">Rp 22.000</div>
-                  <a href="https://example.com/order" target="_blank" class="btn btn-sm btn-outline-primary">Pesan</a>
+                  <div class="menu-price">Rp 25.000</div>
+                  <a href="https://wa.me/c/6282337870246" target="_blank" class="btn btn-sm btn-outline-success">Pesan</a>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-
-      <div class="col-12 col-md-6 col-lg-4">
-        <div class="card h-100">
-          <div class="row g-0">
-            <div class="col-5">
-              <img src="https://images.unsplash.com/photo-1511920170033-f8396924c348?q=80&w=600&auto=format&fit=crop&ixlib=rb-4.0.3&s=2c9be1d3c6e7a9f0b5d3c4a7" alt="Espresso" style="width:100%;height:100%;object-fit:cover">
-            </div>
-            <div class="col-7">
-              <div class="card-body">
-                <h5 class="card-title">Espresso</h5>
-                <p class="small-muted mb-2">Single / double shot — kekuatan penuh cita rasa kopi.</p>
-                <div class="d-flex justify-content-between align-items-center">
-                  <div class="menu-price">Rp 12.000</div>
-                  <a href="https://example.com/order" target="_blank" class="btn btn-sm btn-outline-primary">Pesan</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-12 col-md-6 col-lg-4">
-        <div class="card h-100">
-          <div class="row g-0">
-            <div class="col-5">
-              <img src="https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=600&auto=format&fit=crop&ixlib=rb-4.0.3&s=b6a6f1a2c4d5e6f7a8b9c0d1" alt="Nasi Goreng" style="width:100%;height:100%;object-fit:cover">
-            </div>
-            <div class="col-7">
-              <div class="card-body">
-                <h5 class="card-title">Nasi Goreng Special</h5>
-                <p class="small-muted mb-2">Nasi goreng rumahan dengan topping telur mata sapi dan kerupuk.</p>
-                <div class="d-flex justify-content-between align-items-center">
-                  <div class="menu-price">Rp 28.000</div>
-                  <a href="https://example.com/order" target="_blank" class="btn btn-sm btn-outline-primary">Pesan</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
+      <!-- add more menu items similarly -->
     </div>
   </section>
 
@@ -167,8 +164,12 @@
     <div class="row g-3">
       <div class="col-md-6">
         <div class="card p-3 h-100">
-          <h5>Tentang Lazuardi Café</h5>
-          <p class="small-muted">Lazuardi Café adalah ruang kecil di Kampus Lazuardi yang merayakan percakapan panjang, ide-ide sederhana, dan kopi yang dibuat dengan penuh perhatian. Kami menggunakan biji lokal, menyajikan makanan rumahan, dan menyediakan koneksi Wi-Fi gratis untuk pelajar serta pekerja kreatif.</p>
+          <h5>Tentang Rindang</h5>
+          <p class="small-muted">
+            Rindang adalah Tempat teduh yang merayakan percakapan panjang, ide-ide sederhana,
+            dan kopi yang dibuat dengan penuh perhatian. Kami menggunakan biji lokal, menyajikan makanan, dan
+            menyediakan koneksi Wi-Fi gratis.
+          </p>
           <ul class="small-muted">
             <li>Wifi & colokan tersedia</li>
             <li>Area indoor & outdoor</li>
@@ -179,11 +180,13 @@
       <div class="col-md-6">
         <div class="card p-3 h-100">
           <h5 id="contact">Kontak & Lokasi</h5>
-          <p class="small-muted mb-1"><strong>Alamat:</strong> Jalan Mawar No.12, Kampus Lazuardi</p>
-          <p class="small-muted mb-1"><strong>Telepon:</strong> <a href="tel:+628123456789">+62 812-3456-789</a></p>
-          <p class="small-muted mb-1"><strong>Instagram:</strong> <a href="https://instagram.com/yourcafe" target="_blank">@yourcafe</a></p>
+          <p class="small-muted mb-1"><strong>Alamat:</strong> Jalan Terminal, Palacari Ilir, RT 01, Batu-batu, Muara Badak, Kutai Kartanegara, Kaltim - Rindang</p>
+          <p class="small-muted mb-1"><strong>Telepon:</strong> <a href="tel:+6282337870246">+62 823-3787-0246</a></p>
+          <p class="small-muted mb-1"><strong>Instagram:</strong> <a href="https://instagram.com/rindang.coffee" target="_blank">@rindang.coffee</a></p>
           <div class="mt-2">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126915.123456789!2d106.827153!3d-6.175110!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzfCsDAwJzAwLjAiTiAxMDZMMTc3JzAwLjAiRQ!5e0!3m2!1sid!2sid!4v0000000000000" width="100%" height="200" style="border:0;border-radius:8px" allowfullscreen="" loading="lazy"></iframe>
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126915.123456789!2d106.827153!3d-6.175110!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzfCsDAwJzAwLjAiTiAxMDZMMTc3JzAwLjAiRQ!5e0!3m2!1sid!2sid!4v0000000000000"
+              width="100%" height="200" style="border:0;border-radius:8px" allowfullscreen="" loading="lazy"></iframe>
             <div class="small-muted mt-2">Klik peta untuk arah</div>
           </div>
         </div>
@@ -192,7 +195,9 @@
   </section>
 
   <footer class="pt-4 pb-2 text-center">
-    <div class="small-muted">© Lazuardi Café • Informational site — Tidak menerima pesanan langsung dari halaman ini. Untuk memesan, klik tombol "Pesan Sekarang".</div>
+    <div class="small-muted">
+      © Rindang • Informational site — Tidak menerima pesanan langsung dari halaman ini. Untuk memesan, klik tombol “Pesan Sekarang”.
+    </div>
   </footer>
 </div>
 
@@ -212,19 +217,20 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-// Make gallery images open in modal
-document.querySelectorAll('.gallery-img').forEach(img=>{
-  img.style.cursor='pointer';
-  img.addEventListener('click',e=>{
+// Gallery click to modal
+document.querySelectorAll('.gallery-img').forEach(img => {
+  img.style.cursor = 'pointer';
+  img.addEventListener('click', e => {
     const src = img.getAttribute('data-src') || img.src;
     document.getElementById('modalImg').src = src;
   });
 });
 
-// Replace example order link quickly
-// Change this URL to your real ordering link
-const ORDER_LINK = 'https://example.com/order';
-document.querySelectorAll('#orderLink, a.btn.btn-primary, a.btn.btn-outline-primary').forEach(a=>{a.href = ORDER_LINK});
+// Order link already set to WhatsApp
+const ORDER_LINK = 'https://wa.me/c/6282337870246';
+document.querySelectorAll('#orderLink, a.btn.btn-success, a.btn.btn-outline-success').forEach(a=>{
+  a.href = ORDER_LINK;
+});
 </script>
 </body>
 </html>
