@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Café Dashboard — Rindang</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    :root{--accent:#7c3aed}
+    body{font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;}
+    .sidebar{background:linear-gradient(180deg,#111827,#0f172a);min-height:100vh;color:#e6eef8}
+    .brand{color:var(--accent);font-weight:700}
+    .card-kpi{border-left:4px solid var(--accent)}
+    .table-fixed{max-height:320px;overflow:auto}
+    .small-muted{font-size:.85rem;color:#6b7280}
+    .status-paid{color: #16a34a;font-weight:600}
+    .status-pending{color:#d97706;font-weight:600}
+    .status-check{color:#0ea5e9;font-weight:600}
+  </style>
+</head>
+<body>
+<div class="container-fluid">
+  <div class="row">
+    <!-- SIDEBAR -->
+    <nav class="col-12 col-md-3 col-lg-2 p-3 sidebar">
+      <a class="d-flex align-items-center mb-3 brand text-decoration-none" href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-cup-fill me-2" viewBox="0 0 16 16">
+          <path d="M.11 3.243A1 1 0 0 1 1.08 2h8.84a1 1 0 0 1 .97 1.243L10.5 9H13a2 2 0 0 0 0-4h-.5a1 1 0 0 1 0-2H13a4 4 0 1 1-4 4H3a2 2 0 0 1-2-2V4a1 1 0 0 1-.89-.757z"/>
+        </svg>
+        Rindang — Dashboard
+      </a>
+      <hr class="text-secondary">
+      <ul class="nav flex-column">
+        <li class="nav-item"><a class="nav-link text-white" href="#overview">Overview</a></li>
+        <li class="nav-item"><a class="nav-link text-white" href="#orders">Orders</a></li>
+        <li class="nav-item"><a class="nav-link text-white" href="#menu">Menu</a></li>
+        <li class="nav-item"><a class="nav-link text-white" href="#inventory">Inventory</a></li>
+        <li class="nav-item"><a class="nav-link text-white" href="#payments">Payments</a></li>
+        <li class="nav-item"><a class="nav-link text-white" href="#staff">Staff</a></li>
+        <li class="nav-item"><a class="nav-link text-white" href="#settings">Settings</a></li>
+      </ul>
+      <div class="mt-4 small-muted">Logged in as <strong>Admin</strong></div>
+      <div class="mt-3 small-muted">Last sync: <span id="lastSync">—</span></div>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main class="col-12 col-md-9 col-lg-10 p-4">
+      <header class="d-flex justify-content-between align-items-center mb-4">
+        <h3 id="overview">Overview</h3>
+        <div>
+          <button class="btn btn-outline-secondary me-2" id="refreshBtn">Refresh</button>
+          <div class="btn-group">
+            <button class="btn btn-primary">+ New Order</button>
+            <button class="btn btn-outline-primary">+ New Menu</button>
+          </div>
+        </div>
+      </header>
+
+      <section class="row g-3 mb-4">
+        <div class="col-6 col-md-3">
+          <div class="card p-3 card-kpi">
+            <div class="small-muted">Today Sales</div>
+            <h4 id="kpi-sales">Rp 0</h4>
+            <div class="small-muted">+3% vs yesterday</div>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="card p-3 card-kpi">
+            <div class="small-muted">Orders (today)</div>
+            <h4 id="kpi-orders">0</h4>
+            <div class="small-muted">Avg ticket: Rp 0</div>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="card p-3 card-kpi">
+            <div class="small-muted">Pending Payments</div>
+            <h4 id="kpi-pending">0</h4>
+            <div class="small-muted">Require confirmation</div>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="card p-3 card-kpi">
+            <div class="small-muted">Low Stock Items</div>
+            <h4 id="kpi-stock">0</h4>
+            <div class="small-muted">Reorder recommended</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="row mb-4">
+        <div class="col-lg-8">
+          <div class="card p-3">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <strong>Sales (last 7 days)</strong>
+              <small class="small-muted">Updated just now</small>
+            </div>
+            <canvas id="chartSales" height="120"></canvas>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="card p-3 mb-3">
+            <strong>Top selling (today)</strong>
+            <ul class="list-group list-group-flush mt-2" id="topSelling">
+              <!-- populated by JS -->
+            </ul>
+          </div>
+          <div class="card p-3">
+            <strong>Printer Status</strong>
+            <div class="mt-2 small-muted">Bar printer: <span id="printerBar">Disconnected</span></div>
+            <div class="small-muted">Kitchen printer: <span id="printerKitchen">Disconnected</span></div>
+            <button class="btn btn-sm btn-outline-secondary mt-2" id="testPrint">Test Print</button>
+          </div>
+        </div>
+      </section>
+
+      <section id="orders" class="mb-4">
+        <div class="card p-3">
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <strong>Incoming Orders</strong>
+            <div>
+              <input id="searchOrders" class="form-control form-control-sm" placeholder="Search order / customer" style="width:260px;display:inline-block">
+            </div>
+          </div>
+          <div class="table-responsive table-fixed">
+            <table class="table table-hover mb-0">
+              <thead class="table-light small-muted">
+                <tr><th>Order</th><th>Customer</th><th>Items</th><th>Total</th><th>Method</th><th>Status</th><th></th></tr>
+              </thead>
+              <tbody id="ordersTable">
+                <!-- JS populate -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section id="payments" class="mb-4">
+        <div class="card p-3">
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <strong>Payments (awaiting confirmation)</strong>
+            <small class="small-muted">Customers must upload proof for transfer payments</small>
+          </div>
+          <div class="table-responsive table-fixed">
+            <table class="table table-striped mb-0">
+              <thead class="table-light small-muted">
+                <tr><th>Order</th><th>Customer</th><th>Proof</th><th>Amount</th><th>Action</th></tr>
+              </thead>
+              <tbody id="paymentsTable"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section id="menu" class="mb-4">
+        <div class="card p-3">
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <strong>Menu Management</strong>
+            <button class="btn btn-sm btn-outline-primary" id="addMenuBtn">Add Menu Item</button>
+          </div>
+          <div class="row g-3" id="menuGrid">
+            <!-- menu cards by JS -->
+          </div>
+        </div>
+      </section>
+
+      <section id="inventory" class="mb-4">
+        <div class="card p-3">
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <strong>Inventory</strong>
+            <small class="small-muted">Track stock and get reorder alerts</small>
+          </div>
+          <div class="table-responsive table-fixed">
+            <table class="table mb-0">
+              <thead class="table-light small-muted"><tr><th>Item</th><th>Stock</th><th>Unit</th><th>Reorder</th></tr></thead>
+              <tbody id="inventoryTable"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section id="staff" class="mb-4">
+        <div class="card p-3">
+          <strong>Staff & Roles</strong>
+          <div class="mt-2 small-muted">Manage accounts and assign POS/Printer rights</div>
+          <ul class="list-group list-group-flush mt-3" id="staffList"></ul>
+        </div>
+      </section>
+
+      <footer class="mt-4 small-muted">© Lazuardi Café • Admin Dashboard — Static demo. Replace sample data with your backend or API.</footer>
+
+    </main>
+  </div>
+</div>
+
+<!-- Modal for confirming payments -->
+<div class="modal fade" id="confirmModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header"><h5 class="modal-title">Confirm Payment</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+      <div class="modal-body">
+        <p id="confirmText">—</p>
+        <img id="proofImg" src="" alt="proof" class="img-fluid border rounded">
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline-danger" id="rejectPayment">Reject</button>
+        <button class="btn btn-success" id="approvePayment">Approve</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+// ---------- Sample data (replace with real API calls) ----------
+const sample = {
+  sales7: [120000, 180000, 140000, 220000, 300000, 260000, 200000],
+  labels7: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],
+  top: [{name:'Espresso',qty:18},{name:'Cappuccino',qty:12},{name:'Nasi Goreng',qty:6}],
+  orders: [
+    {id:'ORD-1001',customer:'Rina',items:'Cappuccino x1',total:45000,method:'Transfer',status:'Pending',proof:'https://via.placeholder.com/400x250?text=proof1'},
+    {id:'ORD-1002',customer:'Budi',items:'Nasi Goreng x2',total:90000,method:'Cash',status:'Paid',proof:''}
+  ],
+  payments: [
+    {order:'ORD-1001',customer:'Rina',amount:45000,proof:'https://via.placeholder.com/400x250?text=bukti+transfer'}
+  ],
+  menu: [
+    {id:'M-1',title:'Espresso',price:12000,desc:'Single shot espresso',img:'https://via.placeholder.com/160'},
+    {id:'M-2',title:'Cappuccino',price:22000,desc:'Espresso + steamed milk',img:'https://via.placeholder.com/160'},
+  ],
+  inventory: [
+    {item:'Biji Kopi',stock:8,unit:'kg',reorder:5},
+    {item:'Susu UHT',stock:3,unit:'liter',reorder:5}
+  ],
+  staff: [{name:'Saka',role:'Barista'},{name:'Nala',role:'Kasir'}]
+};
+
+// ---------- Utilities ----------
+function rupiah(n){return 'Rp ' + n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');}
+
+// ---------- Render functions ----------
+function renderKPIs(){
+  document.getElementById('kpi-sales').innerText = rupiah(sample.sales7.reduce((a,b)=>a+b,0));
+  document.getElementById('kpi-orders').innerText = sample.orders.length;
+  document.getElementById('kpi-pending').innerText = sample.payments.length;
+  document.getElementById('kpi-stock').innerText = sample.inventory.filter(i=>i.stock<=i.reorder).length;
+}
+
+function renderTopSelling(){
+  const ul = document.getElementById('topSelling'); ul.innerHTML='';
+  sample.top.forEach(t=>{const li=document.createElement('li');li.className='list-group-item d-flex justify-content-between align-items-center';li.innerHTML=`<div>${t.name}<div class='small-muted'>${t.qty} sold</div></div><span class='badge bg-primary rounded-pill'>${t.qty}</span>`;ul.appendChild(li)});
+}
+
+function renderOrders(){
+  const tb=document.getElementById('ordersTable');tb.innerHTML='';
+  sample.orders.forEach(o=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td>${o.id}</td><td>${o.customer}</td><td>${o.items}</td><td>${rupiah(o.total)}</td><td>${o.method}</td><td class='${o.status==='Paid'?'status-paid':'status-pending'}'>${o.status}</td>
+      <td><button class='btn btn-sm btn-outline-secondary' onclick="viewOrder('${o.id}')">View</button></td>`;
+    tb.appendChild(tr);
+  });
+}
+
+function renderPayments(){
+  const tb=document.getElementById('paymentsTable');tb.innerHTML='';
+  sample.payments.forEach((p,idx)=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td>${p.order}</td><td>${p.customer}</td><td><a href='${p.proof}' target='_blank'>View proof</a></td><td>${rupiah(p.amount)}</td>
+      <td><button class='btn btn-sm btn-success' onclick="openConfirm(${idx})">Confirm</button></td>`;
+    tb.appendChild(tr);
+  });
+}
+
+function renderMenu(){
+  const grid=document.getElementById('menuGrid');grid.innerHTML='';
+  sample.menu.forEach(m=>{
+    const col=document.createElement('div');col.className='col-12 col-sm-6 col-md-4 col-lg-3';
+    col.innerHTML=`<div class='card h-100'>
+      <img src='${m.img}' class='card-img-top' alt='${m.title}'>
+      <div class='card-body'><h6 class='card-title'>${m.title} — <small class='small-muted'>${rupiah(m.price)}</small></h6>
+      <p class='card-text small-muted'>${m.desc}</p>
+      <div class='d-flex justify-content-between align-items-center'><button class='btn btn-sm btn-outline-primary'>Edit</button><button class='btn btn-sm btn-outline-danger'>Delete</button></div>
+      </div></div>`;
+    grid.appendChild(col);
+  });
+}
+
+function renderInventory(){
+  const tb=document.getElementById('inventoryTable');tb.innerHTML='';
+  sample.inventory.forEach(i=>{const tr=document.createElement('tr');tr.innerHTML=`<td>${i.item}</td><td>${i.stock}</td><td>${i.unit}</td><td>${i.reorder}</td>`;tb.appendChild(tr);});
+}
+function renderStaff(){
+  const list=document.getElementById('staffList');list.innerHTML='';
+  sample.staff.forEach(s=>{const li=document.createElement('li');li.className='list-group-item d-flex justify-content-between align-items-center';li.innerHTML=`<div><strong>${s.name}</strong><div class='small-muted'>${s.role}</div></div><div><button class='btn btn-sm btn-outline-secondary'>Edit</button></div>`;list.appendChild(li)});
+}
+
+// ---------- Charts ----------
+let salesChart=null;
+function initCharts(){
+  const ctx = document.getElementById('chartSales');
+  salesChart = new Chart(ctx, {type:'line',data:{labels:sample.labels7,datasets:[{label:'Sales',data:sample.sales7,fill:true,tension:.3}]},options:{responsive:true,plugins:{legend:{display:false}}}});
+}
+
+// ---------- Actions ----------
+function viewOrder(id){alert('Open order detail: '+id)}
+function openConfirm(idx){
+  const p = sample.payments[idx];
+  document.getElementById('confirmText').innerText = `${p.customer} — ${p.order} — ${rupiah(p.amount)}`;
+  document.getElementById('proofImg').src = p.proof;
+  const modal = new bootstrap.Modal(document.getElementById('confirmModal'));
+  modal.show();
+  document.getElementById('approvePayment').onclick = ()=>{approvePayment(idx); modal.hide();}
+  document.getElementById('rejectPayment').onclick = ()=>{rejectPayment(idx); modal.hide();}
+}
+function approvePayment(idx){
+  // fake approve: remove from payments and mark order paid
+  const orderId = sample.payments[idx].order;
+  sample.payments.splice(idx,1);
+  const o = sample.orders.find(x=>x.id===orderId); if(o) o.status='Paid';
+  renderPayments(); renderOrders(); renderKPIs();
+  alert('Payment approved: '+orderId);
+}
+function rejectPayment(idx){
+  const orderId = sample.payments[idx].order;
+  sample.payments.splice(idx,1);
+  renderPayments(); renderKPIs();
+  alert('Payment rejected: '+orderId);
+}
+
+// ---------- Init ----------
+function init(){
+  renderKPIs(); renderTopSelling(); renderOrders(); renderPayments(); renderMenu(); renderInventory(); renderStaff(); initCharts();
+  document.getElementById('lastSync').innerText = new Date().toLocaleString();
+  document.getElementById('refreshBtn').onclick = ()=>{init();};
+  document.getElementById('testPrint').onclick = ()=>{alert('Send test print to configured printer (demo)')};
+}
+
+init();
+</script>
+</body>
+</html>
