@@ -1,210 +1,210 @@
 <!doctype html>
 <html lang="id">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Café Dashboard — Rindang</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Rindang — Visitor Dashboard</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <style>
-    :root{--accent:#7c3aed}
-    body{font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;}
-    .sidebar{background:linear-gradient(180deg,#111827,#0f172a);min-height:100vh;color:#e6eef8}
+    :root{--accent:#7c3aed;--muted:#6b7280}
+    body{font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial;}
+    .hero{background:linear-gradient(180deg, rgba(124,58,237,0.06), rgba(124,58,237,0.02));padding:3.5rem 1.25rem;border-radius:12px}
     .brand{color:var(--accent);font-weight:700}
-    .card-kpi{border-left:4px solid var(--accent)}
-    .table-fixed{max-height:320px;overflow:auto}
-    .small-muted{font-size:.85rem;color:#6b7280}
-    .status-paid{color: #16a34a;font-weight:600}
-    .status-pending{color:#d97706;font-weight:600}
-    .status-check{color:#0ea5e9;font-weight:600}
+    .photo-card{border-radius:12px;overflow:hidden}
+    .menu-price{font-weight:700}
+    .section-title{font-size:1.125rem;font-weight:700}
+    .small-muted{color:var(--muted)}
+    .gallery-img{object-fit:cover;height:180px;width:100%}
+    footer{color:var(--muted)}
+    @media(min-width:992px){.gallery-img{height:220px}}
   </style>
 </head>
 <body>
-<div class="container-fluid">
-  <div class="row">
-    <!-- SIDEBAR -->
-    <nav class="col-12 col-md-3 col-lg-2 p-3 sidebar">
-      <a class="d-flex align-items-center mb-3 brand text-decoration-none" href="#">
-        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-cup-fill me-2" viewBox="0 0 16 16">
-          <path d="M.11 3.243A1 1 0 0 1 1.08 2h8.84a1 1 0 0 1 .97 1.243L10.5 9H13a2 2 0 0 0 0-4h-.5a1 1 0 0 1 0-2H13a4 4 0 1 1-4 4H3a2 2 0 0 1-2-2V4a1 1 0 0 1-.89-.757z"/>
-        </svg>
-        Rindang — Dashboard
-      </a>
-      <hr class="text-secondary">
-      <ul class="nav flex-column">
-        <li class="nav-item"><a class="nav-link text-white" href="#overview">Overview</a></li>
-        <li class="nav-item"><a class="nav-link text-white" href="#orders">Orders</a></li>
-        <li class="nav-item"><a class="nav-link text-white" href="#menu">Menu</a></li>
-        <li class="nav-item"><a class="nav-link text-white" href="#inventory">Inventory</a></li>
-        <li class="nav-item"><a class="nav-link text-white" href="#payments">Payments</a></li>
-        <li class="nav-item"><a class="nav-link text-white" href="#staff">Staff</a></li>
-        <li class="nav-item"><a class="nav-link text-white" href="#settings">Settings</a></li>
-      </ul>
-      <div class="mt-4 small-muted">Logged in as <strong>Admin</strong></div>
-      <div class="mt-3 small-muted">Last sync: <span id="lastSync">—</span></div>
-    </nav>
+<div class="container py-4">
+  <header class="d-flex align-items-center justify-content-between mb-4">
+    <div>
+      <a class="brand text-decoration-none" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-cup-fill me-2" viewBox="0 0 16 16"><path d="M.11 3.243A1 1 0 0 1 1.08 2h8.84a1 1 0 0 1 .97 1.243L10.5 9H13a2 2 0 0 0 0-4h-.5a1 1 0 0 1 0-2H13a4 4 0 1 1-4 4H3a2 2 0 0 1-2-2V4a1 1 0 0 1-.89-.757z"/></svg> Lazuardi Café</a>
+      <div class="small-muted">Jalan Mawar No.12 — Kampus Lazuardi</div>
+    </div>
+    <div>
+      <a id="orderLink" class="btn btn-outline-primary me-2" href="https://example.com/order" target="_blank">Pesan Sekarang</a>
+      <a class="btn btn-outline-secondary" href="#contact">Hubungi</a>
+    </div>
+  </header>
 
-    <!-- MAIN CONTENT -->
-    <main class="col-12 col-md-9 col-lg-10 p-4">
-      <header class="d-flex justify-content-between align-items-center mb-4">
-        <h3 id="overview">Overview</h3>
-        <div>
-          <button class="btn btn-outline-secondary me-2" id="refreshBtn">Refresh</button>
-          <div class="btn-group">
-            <button class="btn btn-primary">+ New Order</button>
-            <button class="btn btn-outline-primary">+ New Menu</button>
-          </div>
+  <section class="hero mb-4">
+    <div class="row align-items-center">
+      <div class="col-lg-6">
+        <h1 class="mb-2">Suasana hangat, kopi yang menenangkan</h1>
+        <p class="small-muted">Nikmati kopi spesial dan hidangan rumahan di ruang yang didesain untuk diskusi kreatif dan kerja santai. Lihat galeri, jelajahi menu, lalu klik "Pesan Sekarang" jika ingin memesannya.</p>
+        <div class="mt-3">
+          <a class="btn btn-primary me-2" href="https://example.com/order" target="_blank">Pesan Sekarang</a>
+          <a class="btn btn-outline-secondary" href="#gallery">Lihat Galeri</a>
         </div>
-      </header>
-
-      <section class="row g-3 mb-4">
-        <div class="col-6 col-md-3">
-          <div class="card p-3 card-kpi">
-            <div class="small-muted">Today Sales</div>
-            <h4 id="kpi-sales">Rp 0</h4>
-            <div class="small-muted">+3% vs yesterday</div>
-          </div>
-        </div>
-        <div class="col-6 col-md-3">
-          <div class="card p-3 card-kpi">
-            <div class="small-muted">Orders (today)</div>
-            <h4 id="kpi-orders">0</h4>
-            <div class="small-muted">Avg ticket: Rp 0</div>
-          </div>
-        </div>
-        <div class="col-6 col-md-3">
-          <div class="card p-3 card-kpi">
-            <div class="small-muted">Pending Payments</div>
-            <h4 id="kpi-pending">0</h4>
-            <div class="small-muted">Require confirmation</div>
-          </div>
-        </div>
-        <div class="col-6 col-md-3">
-          <div class="card p-3 card-kpi">
-            <div class="small-muted">Low Stock Items</div>
-            <h4 id="kpi-stock">0</h4>
-            <div class="small-muted">Reorder recommended</div>
-          </div>
-        </div>
-      </section>
-
-      <section class="row mb-4">
-        <div class="col-lg-8">
-          <div class="card p-3">
-            <div class="d-flex justify-content-between align-items-center mb-2">
-              <strong>Sales (last 7 days)</strong>
-              <small class="small-muted">Updated just now</small>
-            </div>
-            <canvas id="chartSales" height="120"></canvas>
-          </div>
-        </div>
-        <div class="col-lg-4">
-          <div class="card p-3 mb-3">
-            <strong>Top selling (today)</strong>
-            <ul class="list-group list-group-flush mt-2" id="topSelling">
-              <!-- populated by JS -->
-            </ul>
-          </div>
-          <div class="card p-3">
-            <strong>Printer Status</strong>
-            <div class="mt-2 small-muted">Bar printer: <span id="printerBar">Disconnected</span></div>
-            <div class="small-muted">Kitchen printer: <span id="printerKitchen">Disconnected</span></div>
-            <button class="btn btn-sm btn-outline-secondary mt-2" id="testPrint">Test Print</button>
-          </div>
-        </div>
-      </section>
-
-      <section id="orders" class="mb-4">
-        <div class="card p-3">
-          <div class="d-flex justify-content-between align-items-center mb-2">
-            <strong>Incoming Orders</strong>
-            <div>
-              <input id="searchOrders" class="form-control form-control-sm" placeholder="Search order / customer" style="width:260px;display:inline-block">
+      </div>
+      <div class="col-lg-6 mt-3 mt-lg-0">
+        <div class="card shadow-sm">
+          <img src="https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?q=80&w=1400&auto=format&fit=crop&ixlib=rb-4.0.3&s=7f5b0b7c2b8b7c8f3f8a6b7e6d2f9f6d" alt="Lazuardi Cafe interior" style="width:100%;height:260px;object-fit:cover;border-radius:8px">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center">
+              <div>
+                <strong>Jam Buka</strong>
+                <div class="small-muted">Setiap hari • 11:00 — 23:00</div>
+              </div>
+              <div class="text-end">
+                <div class="small-muted">Rating</div>
+                <div><strong>4.8 ★</strong></div>
+              </div>
             </div>
           </div>
-          <div class="table-responsive table-fixed">
-            <table class="table table-hover mb-0">
-              <thead class="table-light small-muted">
-                <tr><th>Order</th><th>Customer</th><th>Items</th><th>Total</th><th>Method</th><th>Status</th><th></th></tr>
-              </thead>
-              <tbody id="ordersTable">
-                <!-- JS populate -->
-              </tbody>
-            </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="gallery" class="mb-5">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <div class="section-title">Galeri Suasana</div>
+      <div class="small-muted">Scroll untuk melihat foto — klik untuk memperbesar</div>
+    </div>
+    <div class="row g-3">
+      <!-- gallery items -->
+      <div class="col-6 col-md-4 col-lg-3">
+        <div class="photo-card bg-light">
+          <img src="https://images.unsplash.com/photo-1526318472351-c75fcf070b0f?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=9f1d9b3b2a5e9d2c7c9e4a8c" alt="cozy corner" class="gallery-img" data-bs-toggle="modal" data-bs-target="#imgModal" data-src="https://images.unsplash.com/photo-1526318472351-c75fcf070b0f?q=80&w=1400&auto=format&fit=crop&ixlib=rb-4.0.3&s=9f1d9b3b2a5e9d2c7c9e4a8c">
+        </div>
+      </div>
+      <div class="col-6 col-md-4 col-lg-3">
+        <div class="photo-card bg-light">
+          <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=8c3a2e6f9b1f5d8a0b6c9d5e" alt="coffee closeup" class="gallery-img" data-bs-toggle="modal" data-bs-target="#imgModal" data-src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=1400&auto=format&fit=crop&ixlib=rb-4.0.3&s=8c3a2e6f9b1f5d8a0b6c9d5e">
+        </div>
+      </div>
+      <div class="col-6 col-md-4 col-lg-3">
+        <div class="photo-card bg-light">
+          <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=3a8b9e6d2c4f7a1b2c3d4e5f" alt="barista at work" class="gallery-img" data-bs-toggle="modal" data-bs-target="#imgModal" data-src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=1400&auto=format&fit=crop&ixlib=rb-4.0.3&s=3a8b9e6d2c4f7a1b2c3d4e5f">
+        </div>
+      </div>
+      <div class="col-6 col-md-4 col-lg-3">
+        <div class="photo-card bg-light">
+          <img src="https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=7f5b0b7c2b8b7c8f3f8a6b7e6d2f9f6d" alt="interior" class="gallery-img" data-bs-toggle="modal" data-bs-target="#imgModal" data-src="https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?q=80&w=1400&auto=format&fit=crop&ixlib=rb-4.0.3&s=7f5b0b7c2b8b7c8f3f8a6b7e6d2f9f6d">
+        </div>
+      </div>
+      <!-- add more images as needed -->
+    </div>
+  </section>
+
+  <section id="menu" class="mb-5">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <div class="section-title">Menu Pilihan</div>
+      <div class="small-muted">Harga dalam IDR</div>
+    </div>
+
+    <div class="row g-3">
+      <div class="col-12 col-md-6 col-lg-4">
+        <div class="card h-100">
+          <div class="row g-0">
+            <div class="col-5">
+              <img src="https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?q=80&w=600&auto=format&fit=crop&ixlib=rb-4.0.3&s=7f5b0b7c2b8b7c8f3f8a6b7e6d2f9f6d" alt="Cappuccino" style="width:100%;height:100%;object-fit:cover">
+            </div>
+            <div class="col-7">
+              <div class="card-body">
+                <h5 class="card-title">Cappuccino</h5>
+                <p class="small-muted mb-2">Espresso + steamed milk + foam. Pilihan susu: full cream / oat.</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="menu-price">Rp 22.000</div>
+                  <a href="https://example.com/order" target="_blank" class="btn btn-sm btn-outline-primary">Pesan</a>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-      </section>
+      </div>
 
-      <section id="payments" class="mb-4">
-        <div class="card p-3">
-          <div class="d-flex justify-content-between align-items-center mb-2">
-            <strong>Payments (awaiting confirmation)</strong>
-            <small class="small-muted">Customers must upload proof for transfer payments</small>
-          </div>
-          <div class="table-responsive table-fixed">
-            <table class="table table-striped mb-0">
-              <thead class="table-light small-muted">
-                <tr><th>Order</th><th>Customer</th><th>Proof</th><th>Amount</th><th>Action</th></tr>
-              </thead>
-              <tbody id="paymentsTable"></tbody>
-            </table>
-          </div>
-        </div>
-      </section>
-
-      <section id="menu" class="mb-4">
-        <div class="card p-3">
-          <div class="d-flex justify-content-between align-items-center mb-2">
-            <strong>Menu Management</strong>
-            <button class="btn btn-sm btn-outline-primary" id="addMenuBtn">Add Menu Item</button>
-          </div>
-          <div class="row g-3" id="menuGrid">
-            <!-- menu cards by JS -->
+      <div class="col-12 col-md-6 col-lg-4">
+        <div class="card h-100">
+          <div class="row g-0">
+            <div class="col-5">
+              <img src="https://images.unsplash.com/photo-1511920170033-f8396924c348?q=80&w=600&auto=format&fit=crop&ixlib=rb-4.0.3&s=2c9be1d3c6e7a9f0b5d3c4a7" alt="Espresso" style="width:100%;height:100%;object-fit:cover">
+            </div>
+            <div class="col-7">
+              <div class="card-body">
+                <h5 class="card-title">Espresso</h5>
+                <p class="small-muted mb-2">Single / double shot — kekuatan penuh cita rasa kopi.</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="menu-price">Rp 12.000</div>
+                  <a href="https://example.com/order" target="_blank" class="btn btn-sm btn-outline-primary">Pesan</a>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-      </section>
+      </div>
 
-      <section id="inventory" class="mb-4">
-        <div class="card p-3">
-          <div class="d-flex justify-content-between align-items-center mb-2">
-            <strong>Inventory</strong>
-            <small class="small-muted">Track stock and get reorder alerts</small>
-          </div>
-          <div class="table-responsive table-fixed">
-            <table class="table mb-0">
-              <thead class="table-light small-muted"><tr><th>Item</th><th>Stock</th><th>Unit</th><th>Reorder</th></tr></thead>
-              <tbody id="inventoryTable"></tbody>
-            </table>
+      <div class="col-12 col-md-6 col-lg-4">
+        <div class="card h-100">
+          <div class="row g-0">
+            <div class="col-5">
+              <img src="https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=600&auto=format&fit=crop&ixlib=rb-4.0.3&s=b6a6f1a2c4d5e6f7a8b9c0d1" alt="Nasi Goreng" style="width:100%;height:100%;object-fit:cover">
+            </div>
+            <div class="col-7">
+              <div class="card-body">
+                <h5 class="card-title">Nasi Goreng Special</h5>
+                <p class="small-muted mb-2">Nasi goreng rumahan dengan topping telur mata sapi dan kerupuk.</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="menu-price">Rp 28.000</div>
+                  <a href="https://example.com/order" target="_blank" class="btn btn-sm btn-outline-primary">Pesan</a>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-      </section>
+      </div>
 
-      <section id="staff" class="mb-4">
-        <div class="card p-3">
-          <strong>Staff & Roles</strong>
-          <div class="mt-2 small-muted">Manage accounts and assign POS/Printer rights</div>
-          <ul class="list-group list-group-flush mt-3" id="staffList"></ul>
+    </div>
+  </section>
+
+  <section id="about" class="mb-5">
+    <div class="row g-3">
+      <div class="col-md-6">
+        <div class="card p-3 h-100">
+          <h5>Tentang Lazuardi Café</h5>
+          <p class="small-muted">Lazuardi Café adalah ruang kecil di Kampus Lazuardi yang merayakan percakapan panjang, ide-ide sederhana, dan kopi yang dibuat dengan penuh perhatian. Kami menggunakan biji lokal, menyajikan makanan rumahan, dan menyediakan koneksi Wi-Fi gratis untuk pelajar serta pekerja kreatif.</p>
+          <ul class="small-muted">
+            <li>Wifi & colokan tersedia</li>
+            <li>Area indoor & outdoor</li>
+            <li>Reservasi kecil untuk grup (hubungi kami)</li>
+          </ul>
         </div>
-      </section>
+      </div>
+      <div class="col-md-6">
+        <div class="card p-3 h-100">
+          <h5 id="contact">Kontak & Lokasi</h5>
+          <p class="small-muted mb-1"><strong>Alamat:</strong> Jalan Mawar No.12, Kampus Lazuardi</p>
+          <p class="small-muted mb-1"><strong>Telepon:</strong> <a href="tel:+628123456789">+62 812-3456-789</a></p>
+          <p class="small-muted mb-1"><strong>Instagram:</strong> <a href="https://instagram.com/yourcafe" target="_blank">@yourcafe</a></p>
+          <div class="mt-2">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126915.123456789!2d106.827153!3d-6.175110!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzfCsDAwJzAwLjAiTiAxMDZMMTc3JzAwLjAiRQ!5e0!3m2!1sid!2sid!4v0000000000000" width="100%" height="200" style="border:0;border-radius:8px" allowfullscreen="" loading="lazy"></iframe>
+            <div class="small-muted mt-2">Klik peta untuk arah</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-      <footer class="mt-4 small-muted">© Lazuardi Café • Admin Dashboard — Static demo. Replace sample data with your backend or API.</footer>
-
-    </main>
-  </div>
+  <footer class="pt-4 pb-2 text-center">
+    <div class="small-muted">© Lazuardi Café • Informational site — Tidak menerima pesanan langsung dari halaman ini. Untuk memesan, klik tombol "Pesan Sekarang".</div>
+  </footer>
 </div>
 
-<!-- Modal for confirming payments -->
-<div class="modal fade" id="confirmModal" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
+<!-- Image Modal -->
+<div class="modal fade" id="imgModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
-      <div class="modal-header"><h5 class="modal-title">Confirm Payment</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
-      <div class="modal-body">
-        <p id="confirmText">—</p>
-        <img id="proofImg" src="" alt="proof" class="img-fluid border rounded">
+      <div class="modal-body p-0">
+        <img id="modalImg" src="" alt="photo" style="width:100%;height:100%;object-fit:cover">
       </div>
-      <div class="modal-footer">
-        <button class="btn btn-outline-danger" id="rejectPayment">Reject</button>
-        <button class="btn btn-success" id="approvePayment">Approve</button>
+      <div class="modal-footer small-muted">
+        <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-dismiss="modal">Tutup</button>
       </div>
     </div>
   </div>
@@ -212,130 +212,19 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-// ---------- Sample data (replace with real API calls) ----------
-const sample = {
-  sales7: [120000, 180000, 140000, 220000, 300000, 260000, 200000],
-  labels7: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],
-  top: [{name:'Espresso',qty:18},{name:'Cappuccino',qty:12},{name:'Nasi Goreng',qty:6}],
-  orders: [
-    {id:'ORD-1001',customer:'Rina',items:'Cappuccino x1',total:45000,method:'Transfer',status:'Pending',proof:'https://via.placeholder.com/400x250?text=proof1'},
-    {id:'ORD-1002',customer:'Budi',items:'Nasi Goreng x2',total:90000,method:'Cash',status:'Paid',proof:''}
-  ],
-  payments: [
-    {order:'ORD-1001',customer:'Rina',amount:45000,proof:'https://via.placeholder.com/400x250?text=bukti+transfer'}
-  ],
-  menu: [
-    {id:'M-1',title:'Espresso',price:12000,desc:'Single shot espresso',img:'https://via.placeholder.com/160'},
-    {id:'M-2',title:'Cappuccino',price:22000,desc:'Espresso + steamed milk',img:'https://via.placeholder.com/160'},
-  ],
-  inventory: [
-    {item:'Biji Kopi',stock:8,unit:'kg',reorder:5},
-    {item:'Susu UHT',stock:3,unit:'liter',reorder:5}
-  ],
-  staff: [{name:'Saka',role:'Barista'},{name:'Nala',role:'Kasir'}]
-};
-
-// ---------- Utilities ----------
-function rupiah(n){return 'Rp ' + n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');}
-
-// ---------- Render functions ----------
-function renderKPIs(){
-  document.getElementById('kpi-sales').innerText = rupiah(sample.sales7.reduce((a,b)=>a+b,0));
-  document.getElementById('kpi-orders').innerText = sample.orders.length;
-  document.getElementById('kpi-pending').innerText = sample.payments.length;
-  document.getElementById('kpi-stock').innerText = sample.inventory.filter(i=>i.stock<=i.reorder).length;
-}
-
-function renderTopSelling(){
-  const ul = document.getElementById('topSelling'); ul.innerHTML='';
-  sample.top.forEach(t=>{const li=document.createElement('li');li.className='list-group-item d-flex justify-content-between align-items-center';li.innerHTML=`<div>${t.name}<div class='small-muted'>${t.qty} sold</div></div><span class='badge bg-primary rounded-pill'>${t.qty}</span>`;ul.appendChild(li)});
-}
-
-function renderOrders(){
-  const tb=document.getElementById('ordersTable');tb.innerHTML='';
-  sample.orders.forEach(o=>{
-    const tr=document.createElement('tr');
-    tr.innerHTML=`<td>${o.id}</td><td>${o.customer}</td><td>${o.items}</td><td>${rupiah(o.total)}</td><td>${o.method}</td><td class='${o.status==='Paid'?'status-paid':'status-pending'}'>${o.status}</td>
-      <td><button class='btn btn-sm btn-outline-secondary' onclick="viewOrder('${o.id}')">View</button></td>`;
-    tb.appendChild(tr);
+// Make gallery images open in modal
+document.querySelectorAll('.gallery-img').forEach(img=>{
+  img.style.cursor='pointer';
+  img.addEventListener('click',e=>{
+    const src = img.getAttribute('data-src') || img.src;
+    document.getElementById('modalImg').src = src;
   });
-}
+});
 
-function renderPayments(){
-  const tb=document.getElementById('paymentsTable');tb.innerHTML='';
-  sample.payments.forEach((p,idx)=>{
-    const tr=document.createElement('tr');
-    tr.innerHTML=`<td>${p.order}</td><td>${p.customer}</td><td><a href='${p.proof}' target='_blank'>View proof</a></td><td>${rupiah(p.amount)}</td>
-      <td><button class='btn btn-sm btn-success' onclick="openConfirm(${idx})">Confirm</button></td>`;
-    tb.appendChild(tr);
-  });
-}
-
-function renderMenu(){
-  const grid=document.getElementById('menuGrid');grid.innerHTML='';
-  sample.menu.forEach(m=>{
-    const col=document.createElement('div');col.className='col-12 col-sm-6 col-md-4 col-lg-3';
-    col.innerHTML=`<div class='card h-100'>
-      <img src='${m.img}' class='card-img-top' alt='${m.title}'>
-      <div class='card-body'><h6 class='card-title'>${m.title} — <small class='small-muted'>${rupiah(m.price)}</small></h6>
-      <p class='card-text small-muted'>${m.desc}</p>
-      <div class='d-flex justify-content-between align-items-center'><button class='btn btn-sm btn-outline-primary'>Edit</button><button class='btn btn-sm btn-outline-danger'>Delete</button></div>
-      </div></div>`;
-    grid.appendChild(col);
-  });
-}
-
-function renderInventory(){
-  const tb=document.getElementById('inventoryTable');tb.innerHTML='';
-  sample.inventory.forEach(i=>{const tr=document.createElement('tr');tr.innerHTML=`<td>${i.item}</td><td>${i.stock}</td><td>${i.unit}</td><td>${i.reorder}</td>`;tb.appendChild(tr);});
-}
-function renderStaff(){
-  const list=document.getElementById('staffList');list.innerHTML='';
-  sample.staff.forEach(s=>{const li=document.createElement('li');li.className='list-group-item d-flex justify-content-between align-items-center';li.innerHTML=`<div><strong>${s.name}</strong><div class='small-muted'>${s.role}</div></div><div><button class='btn btn-sm btn-outline-secondary'>Edit</button></div>`;list.appendChild(li)});
-}
-
-// ---------- Charts ----------
-let salesChart=null;
-function initCharts(){
-  const ctx = document.getElementById('chartSales');
-  salesChart = new Chart(ctx, {type:'line',data:{labels:sample.labels7,datasets:[{label:'Sales',data:sample.sales7,fill:true,tension:.3}]},options:{responsive:true,plugins:{legend:{display:false}}}});
-}
-
-// ---------- Actions ----------
-function viewOrder(id){alert('Open order detail: '+id)}
-function openConfirm(idx){
-  const p = sample.payments[idx];
-  document.getElementById('confirmText').innerText = `${p.customer} — ${p.order} — ${rupiah(p.amount)}`;
-  document.getElementById('proofImg').src = p.proof;
-  const modal = new bootstrap.Modal(document.getElementById('confirmModal'));
-  modal.show();
-  document.getElementById('approvePayment').onclick = ()=>{approvePayment(idx); modal.hide();}
-  document.getElementById('rejectPayment').onclick = ()=>{rejectPayment(idx); modal.hide();}
-}
-function approvePayment(idx){
-  // fake approve: remove from payments and mark order paid
-  const orderId = sample.payments[idx].order;
-  sample.payments.splice(idx,1);
-  const o = sample.orders.find(x=>x.id===orderId); if(o) o.status='Paid';
-  renderPayments(); renderOrders(); renderKPIs();
-  alert('Payment approved: '+orderId);
-}
-function rejectPayment(idx){
-  const orderId = sample.payments[idx].order;
-  sample.payments.splice(idx,1);
-  renderPayments(); renderKPIs();
-  alert('Payment rejected: '+orderId);
-}
-
-// ---------- Init ----------
-function init(){
-  renderKPIs(); renderTopSelling(); renderOrders(); renderPayments(); renderMenu(); renderInventory(); renderStaff(); initCharts();
-  document.getElementById('lastSync').innerText = new Date().toLocaleString();
-  document.getElementById('refreshBtn').onclick = ()=>{init();};
-  document.getElementById('testPrint').onclick = ()=>{alert('Send test print to configured printer (demo)')};
-}
-
-init();
+// Replace example order link quickly
+// Change this URL to your real ordering link
+const ORDER_LINK = 'https://example.com/order';
+document.querySelectorAll('#orderLink, a.btn.btn-primary, a.btn.btn-outline-primary').forEach(a=>{a.href = ORDER_LINK});
 </script>
 </body>
 </html>
